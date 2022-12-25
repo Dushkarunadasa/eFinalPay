@@ -1,0 +1,79 @@
+/* _content/FinaPay/Views/Shared/_Layout.cshtml.rz.scp.css */
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand[b-t1oxq2er2c] {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a[b-t1oxq2er2c] {
+  color: #0077cc;
+}
+
+.btn-primary[b-t1oxq2er2c] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active[b-t1oxq2er2c], .nav-pills .show > .nav-link[b-t1oxq2er2c] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top[b-t1oxq2er2c] {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom[b-t1oxq2er2c] {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow[b-t1oxq2er2c] {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy[b-t1oxq2er2c] {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer[b-t1oxq2er2c] {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+/* _content/FinaPay/Views/Shared/_LoginLayout.cshtml.rz.scp.css */
+.divider[b-qc20oswxi3]:after,
+.divider[b-qc20oswxi3]:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+}
+
+@media (min-width: 868px) {
+    .gradient-form[b-qc20oswxi3] {
+        margin-top:100px;
+        height: 100vh !important;
+    }
+}
+
+@media (min-width: 869px) {
+    .gradient-custom-2[b-qc20oswxi3] {
+        border-top-right-radius: .3rem;
+        border-bottom-right-radius: .3rem;
+    }
+}
+.gradient-custom-2[b-qc20oswxi3] {
+    /* fallback for old browsers */
+    background: #fccb90;
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593);
+}

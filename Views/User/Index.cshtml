@@ -1,0 +1,80 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<FinaPay.Models.SubRoleAllowance>
+
+@{
+    ViewData["Title"] = "User Setting";
+
+}
+<h2> User Setting Detail </h2>
+<table class=" table table-hover">
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model=>model.SysCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=>model.CatCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=>model.OfficialNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=>model.Role)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=>model.BaseCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=>model.Unit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=>model.Active)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model=>model.ActiveOn)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-dark">
+                <td>
+                    @Html.DisplayFor(modelitem=>item.SysCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem=>item.CatCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem=>item.OfficialNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem=>item.Role)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem=>item.BaseCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem=>item.Unit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem=>item.Active)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem=>item.ActiveOn)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Change","Edit",new{UnitId=@item.Unit, OfficialNo= @item.OfficialNo,Role=@item.Role})
+                    @*<a asp-controller="User" asp-action="Edit" asp-route-id="@item.OfficialNo" type="button" class="btn btn-outline-primary">
+                        <i class="glyphicon glyphicon-plus-sign"></i> &nbsp;Delete
+                    </a>*@
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

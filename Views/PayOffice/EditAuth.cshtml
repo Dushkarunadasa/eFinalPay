@@ -1,0 +1,113 @@
+﻿@model IEnumerable<FinaPay.Contract.RecoveryCheckDetailContract>
+@{
+    ViewData["Title"] = "Forward Pending to P&P";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row pt-4">
+   
+    <div class="col-6">
+        <h4>  <span class="label label-default"> All Received Recoveries -SSO(SM)  </span></h4>
+    </div>
+    <div class="col-2 text-end">
+        <h6>  <span class="label label-default "> TransId :</span></h6>
+
+
+    </div>
+    <div class="col-1 text-start">
+
+        <label class="form-label text-lg-start" id="TTransID">@ViewBag.Message</label>
+
+    </div>
+   
+
+    <div class="col-1 text-end">
+        <p>
+            <a asp-controller="Home" asp-action="RecoveryPendingListDDNP" type="button" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-return-left"></i> &nbsp;Back
+            </a>
+        </p>
+    </div>
+
+
+    <div class="col-2 text-end">
+        <p>
+            <a asp-controller="PayOffice" asp-action="ForwardRecoveryAuth" asp-route-id="@ViewBag.Message" type="button" class="btn btn-outline-primary">
+                <i class="bi bi-save2"></i> &nbsp;Forward
+            </a>
+        </p>
+    </div>
+
+  
+</div>
+<div class="row">
+    <p class="text-danger"> @ViewBag.Error </p>
+  
+</div>
+
+
+
+<table class=" table table-hover">
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Unit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-dark">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+                
+
+            
+
+            </tr>
+        }
+    </tbody>
+</table>
+

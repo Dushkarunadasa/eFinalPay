@@ -1,0 +1,126 @@
+﻿@model FinaPay.Contract.UserSettingContract
+@{
+    ViewData["Title"] = "User Change";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row pt-4">
+    <div class="col-4">
+        <h4>  <span class="label label-default"> User Setting </span></h4>
+    </div>
+    <div class="row">
+        <p class="text-danger"> @TempData["success"] </p>
+
+    </div>
+</div>
+<form method="post" asp-Controller="User">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading "></div>
+        <div class="panel-body">
+            <p>
+                <span class="text-warning">
+                    නාවික පුද්ගලයා හට අදාල අයකර ගැනීම් පහත වගුවේ ලයිස්තුගත වන අතර නව අයකර ගැනී ඇතුල කර ගැනීම සදහා
+                    යා යුතුය.එමෙන්ම ලැයිස්තුවෙන් ඉවත් කල යුතු අයකර ගැනීම් සදහා වගුවේ
+                    ලිංකුව භාවිතා කල යුතුය.අයකර ගැනීම් ලැයිස්තුව ඇතුලත් කර පරීක්ෂා කිරීමෙන් අනතුරුව ලේකම් වෙත ඉදිරිපත් කිරීමට
+                    ලිංකුව යොදාගත යුතුය
+                </span>
+            </p>
+
+        </div>
+    </div>
+
+    <div class="form-group row p-md-2">
+        <div class="col-2">
+            <label for="SysCode" class="col-form-label">Syscode</label>
+        </div>
+        <div class="col-6">
+            <div class="form-group has-success">
+
+                <span asp-validation-for="SysCode" class="text-danger"></span>
+                <select asp-for="SysCode"
+                        class="form-control"
+                        asp-items="Html.GetEnumSelectList<FinaPay.Contract.ESysCode>()">
+                    <option>Select SysCode ...</option>
+                </select>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <div class="form-group row p-md-2">
+        <div class="col-2">
+            <label for="CatCode" class="col-form-label">CatCode</label>
+        </div>
+        <div class="col-6">
+            <div class="form-group has-success">
+
+                <span asp-validation-for="CatCode" class="text-danger"></span>
+                <select asp-for="CatCode"
+                        class="form-control"
+                        asp-items="Html.GetEnumSelectList<FinaPay.Contract.ECatCode>()">
+                    <option>Select CatCode ...</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group row p-md-2">
+        <div class="col-2">
+            <label for="OfficialNo" class="col-form-label">Official No</label>
+        </div>
+        <div class="col-6">
+            <div class="form-group has-success">
+
+                <span asp-validation-for="OfficialNo" class="text-danger"></span>
+                <input asp-for="OfficialNo" class="form-control" placeholder="Official No" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row p-md-2">
+        <div class="col-2">
+            <label for="Unit Id" class="col-form-label">Unit Id</label>
+        </div>
+        <div class="col-6">
+            <div class="form-group has-success">
+
+                <span asp-validation-for="Unit" class="text-danger"></span>
+                <input asp-for="Unit" class="form-control" placeholder="Unit" readonly="@(true)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row p-md-2">
+        <div class="col-2">
+            <label for="UserRole" class="col-form-label">User Role</label>
+        </div>
+        <div class="col-6">
+            <div class="form-group has-success">
+
+                <span asp-validation-for="Role" class="text-danger"></span>
+                <input asp-for="Role" class="form-control" placeholder="Role" readonly="@(true)" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row p-md-4">
+        <div class="col-2"></div>
+        <div class="col-2">
+
+
+            <button asp-controller="User" asp-action="Update" class="btn btn-primary">Create</button>
+
+
+        </div>
+    </div>
+</form>
+
+
+

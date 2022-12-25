@@ -1,0 +1,116 @@
+﻿@model IEnumerable<FinaPay.Models.SubFinalPayHeadDetail>
+
+@{
+    ViewData["Title"] = "RecoveryPendingList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-4">Recovery Entry</h1>
+<br />
+<div class="card mb-4">
+    <div class="card-body">
+        <p> පහත වගුවේ ලැයිස්තු ගතවන නාවික පුද්ගලයන් හට අදාල අයකර ගැනීම් ඇතුලත් කර SSO (SM) වෙත ඉදිරිපත් කිරීමට ඇති අතර එම එක් එක් නාවික පුද්ගලයාට අදාළ දත්තයන්ගේ විස්තර සදහා <span class="text-bg-info">Details</span>  ලිංකුව තුලින් පිවිසිය යුතුය.</p>
+
+    </div>
+</div>
+
+
+
+
+
+<table id="datatablesSimple" class=" table table-striped">
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SysCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficialNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeDt)
+            </th> 
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SysCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficialNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeDt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th></th>
+        </tr>
+    </tfoot>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="table-dark">
+            <td>
+                    @Html.DisplayFor(modelItem => item.TransId)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.SysCode)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.CatCode)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.OfficialNo)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.DischargeDt)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+            </td>
+            <td>
+                    @* @Html.ActionLink("Add", "Add", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) | *@
+
+                    <a asp-controller="Recovery" asp-action="Edit" asp-route-id="@item.TransId" type="button" class="btn btn-outline-primary">
+                        <i class="glyphicon glyphicon-plus-sign"></i> &nbsp;Details
+                    </a>
+                    @*@Html.ActionLink("Add", "Add", new { id=item.TransId}) *@
+                    @*<div class="row">
+                       <button type="button" class="btn btn-outline-primary" style="width:60px">Edit</button> |
+                       <button type="button" class="btn btn-outline-danger" style="width:75px">Delete</button> |
+                       <button type="button" class="btn btn-outline-warning" style="width:75px">Details</button>
+                    </div>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

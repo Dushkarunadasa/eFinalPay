@@ -1,0 +1,95 @@
+﻿@model IEnumerable< FinaPay.Contract.RecoveryCheckContract>
+
+@{
+    ViewData["Title"] = "RecoveryReceivedList-Subject Clerk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-4">Recovery Pending List</h1>
+<br />
+
+<div class="card mb-4">
+    <div class="card-body">
+
+       පහත වගුෙව් නම් සඳහන් නාවිකයින් හට අදාල අයකිරිම් එක් එක් ෙදපාර්තෙම්න්තුව
+
+    </div>
+</div>
+
+
+<table id="datatablesSimple" class=" table table-striped">
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SysCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficialNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeDt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pending)
+            </th> 
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th> 
+            <th>
+                @Html.DisplayNameFor(model => model.IsPending)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr class="table-dark">
+            <td>
+                    @Html.DisplayFor(modelItem => item.TransID)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.SysCode)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.CatCode)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.OfficialNo)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.DischargeDt)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Pending)
+            </td>
+            <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPending)
+            </td>
+            <td>
+                    
+
+                    <a asp-controller="SSOSM" asp-action="Edit" asp-route-id="@item.TransID" type="button" class="btn btn-outline-primary">
+                        <i class="glyphicon glyphicon-plus-sign"></i> &nbsp;Details
+                    </a>
+                  
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<FinaPay.Contract.SubPayRecoveryContrat>
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-4">Entered Recoveries</h1>
+<br />
+<div class="card mb-4">
+    <div class="card-body">
+        <p> පහත Trans ID අංකයට අදාළ ඔබ දෙපාර්තමේන්තුව විසින් ඇතුලත් කල දත්ත පහත වගුවේ දිස්වනවේ.</p>
+
+    </div>
+</div>
+<div class="row pt-2">
+    
+    <div class="col-2">
+        <h4>  <span class="label label-default "> TransId : @ViewBag.Message</span></h4>
+    </div>
+</div>
+<div class="row">
+    <p class="text-danger"> @ViewBag.Error </p>  
+</div>
+
+
+
+<table id="datatablesSimple" class=" table table-hover">
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+
+          
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-dark">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

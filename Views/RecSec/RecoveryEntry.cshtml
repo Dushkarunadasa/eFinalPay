@@ -1,0 +1,83 @@
+﻿@model FinaPay.Contract.SubRecoveryEntryContract
+
+@{
+    ViewData["Title"] = "Recovery Entry";
+}
+
+<h1 class="mt-4">Recovery Checking...</h1>
+<br />
+
+<form method="post" asp-Controller="Recovery">
+    <p class="text-danger"> @ViewBag.Message </p>
+
+    <div class="container alert alert-secondary" lock>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="TransId" class="col-form-label">Trasnaction ID </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="TransId" class="text-danger"></span>
+                <input asp-for="TransId"  class="form-control" placeholder="TransId"  />
+
+            </div>
+        </div>
+        <div class="row p-md-2 ">
+            <div class="col-3">
+                <label for="ItemCode" class="col-form-label">Item Code </label>
+            </div>
+            <div class="col-6">
+
+                <span asp-validation-for="ItemCode" class="text-danger"></span>
+                <select class="form-control" asp-items="Model.ItemCode" asp-for="ItemName">
+                </select>
+
+            </div>
+        </div>
+        <div class=" row p-md-2 ">
+
+            <div class="col-6">
+
+                <span asp-validation-for="ItemName" class="text-danger"></span>
+                <input asp-for="ItemName" class="form-control" placeholder="ItemName" type="hidden" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">Amount </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="Amount" class="text-danger"></span>
+                <input asp-for="Amount" class="form-control" placeholder="Amount" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Remarks" class="col-form-label">Remarks </label>
+            </div>
+            <div class="col-6">
+
+                <span asp-validation-for="Remarks" class="text-danger"></span>
+                <input asp-for="Remarks" class="form-control" placeholder="Remarks" />
+
+            </div>
+        </div>
+
+        <div class="row p-md-2">
+            <div class="col-6 offset-3">
+                <a asp-controller="RecAuthorize" asp-action="Edit" asp-route-id="@Model.TransId" class="btn btn-warning" style="width:150px">Back to List</a>
+                <button asp-controller="RecAuthorize" asp-action="RecoveryInsert" class="btn btn-primary">Create</button>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>

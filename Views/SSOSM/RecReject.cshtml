@@ -1,0 +1,92 @@
+﻿@model FinaPay.Contract.SubRejectContract
+
+@{
+    ViewData["Title"] = "Recovery Reject";
+}
+<h1 class="mt-4">Received Recoveries-Reject</h1>
+<br />
+<div class="card mb-4">
+    <div class="card-body">
+
+        නාවික පුද්ගලයාට අදාලව ඔබ ආයතනයේ ඉදිරිපත් කල හැකි අයකර ගැනීම් තෝරා ගැනීමට පහසුකම් සපයා ඇති අතර, කිසිදු අයකර ගැනීමක් නොමැතිනම් අනිවාර්යයෙන්ම  <span class="text-bg-info">Nill Report</span>
+        තෝරා අදාල දත්ත පුරවා ඉදිරිපත් කිරීමට කටයුතු තල යුතුය.ඉදිරිපත් කරන
+        <span class="text-bg-info">Nill Report</span> සමග වෙනත් අයකර ගැනීම් නොඑවීමට වගබලා ගත යුතුය.
+
+    </div>
+</div>
+<div class="row pt-4">
+
+    
+    <div class="col-2 text-end">
+        <h6>  <span class="label label-default "> TransId : @ViewBag.Message</span></h6>
+
+
+    </div>
+   
+
+</div>
+
+<form method="post" asp-Controller="Recovery">   
+
+    <div class="container alert alert-secondary" lock>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="TransId" class="col-form-label">Trasnaction ID </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="TransId" class="text-danger"></span>
+                <input asp-for="TransId"  class="form-control" placeholder="TransId"  />
+
+            </div>
+        </div>
+        <div class="row p-md-2 ">
+            <div class="col-3">
+                <label for="UnitId" class="col-form-label">Unit Id </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="UnitId" class="text-danger"></span>
+                <input asp-for="UnitId" class="form-control" placeholder="UnitId" />
+
+            </div>
+        </div>
+        <div class=" row p-md-2 ">
+            <div class="col-3">
+                <label for="Unit" class="col-form-label">Unit </label>
+            </div>
+            <div class="col-4">
+
+                <span asp-validation-for="Unit" class="text-danger"></span>
+                <input asp-for="Unit" class="form-control" placeholder="Unit"  />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="RejectReason" class="col-form-label">Reject Reason </label>
+            </div>
+            <div class="col-6">
+
+                <span asp-validation-for="RejectReason" class="text-danger"></span>
+                <input asp-for="RejectReason" class="form-control" placeholder="RejectReason" />
+
+            </div>
+        </div>
+       
+
+        <div class="row p-md-2">
+            <div class="col-6 offset-3">
+                <a asp-controller="SSOSM" asp-action="Edit" asp-route-id="@Model.TransId" class="btn btn-warning" style="width:150px">Back to List</a>
+                <button asp-controller="SSOSM" asp-action="RecoveryReject" class="btn btn-primary">Reject</button>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>

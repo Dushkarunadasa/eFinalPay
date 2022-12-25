@@ -1,0 +1,115 @@
+﻿@model IEnumerable<FinaPay.Contract.SubPayRecoveryContrat>
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-4">Add Pending Recoveries</h1>
+<br />
+
+<div class="card mb-4">
+    <div class="card-body">
+
+        නාවික පුද්ගලයා හට අදාල අයකර ගැනීම් පහත වගුවේ ලයිස්තුගත වන අතර නව අයකර ගැනී ඇතුල කර ගැනීම සදහා  <span class="text-bg-info">Add New Record</span>
+        යා යුතුය.එමෙන්ම ලැයිස්තුවෙන් ඉවත් කල යුතු අයකර ගැනීම් සදහා වගුවේ
+        <span class="text-bg-info">Delete</span>
+        ලිංකුව භාවිතා කල යුතුය.අයකර ගැනීම් ලැයිස්තුව ඇතුලත් කර පරීක්ෂා කිරීමෙන් අනතුරුව ලේකම් වෙත ඉදිරිපත් කිරීමට
+        <span class="text-bg-info">Forward</span>
+        ලිංකුව යොදාගත යුතුය
+
+    </div>
+</div>
+
+<div class="row pt-4">
+   
+    
+      <div class="col-2">
+            <h3>  <span class="label label-default border "> TransId :@ViewBag.Message</span></h3>
+
+
+        </div>
+
+
+    <div class="col-10 text-end">
+        <p>
+            <a asp-controller="Home" asp-action="RecoveryForwardAuth" type="button" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-return-left"></i> &nbsp;Back &nbsp;&nbsp;
+            </a>
+      
+
+
+  
+            <a asp-controller="RecSec" asp-action="ForwardRecovery" asp-route-id="@ViewBag.Message" type="button" class="btn btn-outline-primary">
+                <i class="bi bi-save2"></i> &nbsp;Forward &nbsp;&nbsp;
+            </a>
+       
+
+   
+            <a asp-controller="RecSec" asp-action="RecoveryEntry" asp-route-id="@ViewBag.Message" type="button" class="btn btn-outline-primary">
+                <i class="bi bi-plus-square"></i> &nbsp;Add New Record
+            </a>
+        </p>
+    </div>
+</div>
+<div class="row">
+    <p class="text-danger"> @ViewBag.Error </p>
+  
+</div>
+
+
+
+<table class=" table table-hover" id="datatablesSimple">
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-dark">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+                <td>
+                    @Html.ActionLink("Delete","RecSDelete","RecSec",new{id=@ViewBag.Message, ItemCode= @item.ItemCode})
+                    @*<a asp-controller="Recovery" asp-action="RecDelete" asp-route-id="id=@ViewBag.Message, ItemCode= @item.ItemCode" type="button" class="btn btn-outline-primary">
+                        <i class="bi bi-clipboard-minus"></i> &nbsp;Delete
+                    </a>*@
+                </td>
+
+            
+
+            </tr>
+        }
+    </tbody>
+</table>
+

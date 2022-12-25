@@ -1,0 +1,113 @@
+﻿@model IEnumerable<FinaPay.Contract.RecoveryCheckDetailContract>
+@{
+    ViewData["Title"] = "Recovery Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-4">Received Recoveries</h1>
+<br />
+
+<div class="card mb-4">
+    <div class="card-body">
+
+        නාවික පුද්ගලයාට අදාලව ඔබ ආයතනයේ ඉදිරිපත් කල හැකි අයකර ගැනීම් තෝරා ගැනීමට පහසුකම් සපයා ඇති අතර, කිසිදු අයකර ගැනීමක් නොමැතිනම් අනිවාර්යයෙන්ම  <span class="text-bg-info">Nill Report</span>
+        තෝරා අදාල දත්ත පුරවා ඉදිරිපත් කිරීමට කටයුතු තල යුතුය.ඉදිරිපත් කරන
+        <span class="text-bg-info">Nill Report</span> සමග වෙනත් අයකර ගැනීම් නොඑවීමට වගබලා ගත යුතුය.
+
+    </div>
+</div>
+
+<div class="row pt-4">
+
+    
+    <div class="col-2 text-end">
+        <h6>  <span class="label label-default "> TransId : @ViewBag.Message</span></h6>
+
+
+    </div>
+    
+
+
+    <div class="col-10 text-end">
+        <p>
+            <a asp-controller="Home" asp-action="ActionTakenSSOSM" type="button" class="btn btn-outline-primary">
+                <i class="bi bi-arrow-return-left"></i> &nbsp;Back
+            </a>
+        </p>
+    </div>
+
+
+   
+
+
+</div>
+<div class="row">
+    <p class="text-danger"> @ViewBag.Error </p>
+
+</div>
+
+
+
+<table id="datatablesSimple" class=" table table-hover">
+   
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Unit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ItemCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Item)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+
+           
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-dark">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Unit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Item)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+             
+
+
+
+            </tr>
+        }
+    </tbody>
+</table>
+

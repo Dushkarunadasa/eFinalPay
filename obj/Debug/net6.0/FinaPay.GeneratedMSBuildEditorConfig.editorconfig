@@ -1,0 +1,192 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = FinaPay
+build_property.RootNamespace = FinaPay
+build_property.ProjectDir = E:\Working\FinalPay\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = E:\Working\FinalPay
+build_property._RazorSourceGeneratorDebug = 
+
+[E:/Working/FinalPay/Views/Home/AccessDenied.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBY2Nlc3NEZW5pZWQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Home/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Login/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/PayOffice/EditAuth.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5T2ZmaWNlXEVkaXRBdXRoLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/PayOffice/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5T2ZmaWNlXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/PayOffice/InitialEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5T2ZmaWNlXEluaXRpYWxFbnRyeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/PayOffice/RecDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5T2ZmaWNlXFJlY0RldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/PayOffice/RecoveryForwardedListDDN.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5T2ZmaWNlXFJlY292ZXJ5Rm9yd2FyZGVkTGlzdERETi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/PayOffice/RecoveryPendingList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5T2ZmaWNlXFJlY292ZXJ5UGVuZGluZ0xpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/PayOffice/RecoveryPendingListDDN.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGF5T2ZmaWNlXFJlY292ZXJ5UGVuZGluZ0xpc3RERE4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/RecAuthorize/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjQXV0aG9yaXplXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/RecAuthorize/RecoveryEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjQXV0aG9yaXplXFJlY292ZXJ5RW50cnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/RecAuthorize/RecoveryPendingList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjQXV0aG9yaXplXFJlY292ZXJ5UGVuZGluZ0xpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Recovery/ActionPending.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3ZlcnlcQWN0aW9uUGVuZGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Recovery/ActionTaken.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3ZlcnlcQWN0aW9uVGFrZW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Recovery/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3ZlcnlcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Recovery/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3ZlcnlcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Recovery/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3ZlcnlcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Recovery/RecoveryEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3ZlcnlcUmVjb3ZlcnlFbnRyeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Recovery/RecoveryPendingList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjb3ZlcnlcUmVjb3ZlcnlQZW5kaW5nTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/RecSec/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjU2VjXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/RecSec/RecoveryEntry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjU2VjXFJlY292ZXJ5RW50cnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/RecSec/RecoveryPendingList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUmVjU2VjXFJlY292ZXJ5UGVuZGluZ0xpc3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/ActionPendingSSOSM.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cQWN0aW9uUGVuZGluZ1NTT1NNLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/ActionTakenSSOSM.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cQWN0aW9uVGFrZW5TU09TTS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/DetailsA.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cRGV0YWlsc0EuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/EditAuth.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cRWRpdEF1dGguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/EditSec.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cRWRpdFNlYy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/RecoveryPendingList.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cUmVjb3ZlcnlQZW5kaW5nTGlzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/RecoveryPendingListAuth.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cUmVjb3ZlcnlQZW5kaW5nTGlzdEF1dGguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/RecoveryPendingListSec.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cUmVjb3ZlcnlQZW5kaW5nTGlzdFNlYy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/SSOSM/RecReject.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU1NPU01cUmVjUmVqZWN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/User/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxFZGl0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/User/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Working/FinalPay/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-t1oxq2er2c
+
+[E:/Working/FinalPay/Views/Shared/_LoginLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Mb2dpbkxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-qc20oswxi3
