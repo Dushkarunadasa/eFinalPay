@@ -7,83 +7,66 @@
     ViewData["Title"] = "Finalpay System";
 }
 
-<br/>
-<br />
-<section class="h-100 gradient-form p-10 accordion-header" style="background-color: #eee;">
-
-     
-
-    <div class="container py-5 h-100 ">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-
-            <div class="col-md-8 col-lg-7 col-xl-6">
-                <img src="~/images/7.jpg" class="img-fluid" alt="Phone image" />
-
-            </div>
-            <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-
-                <form method="post" asp-action="Login" asp-controller="Login">
-                    <p class="text-danger"> @ViewBag.Message </p>
-
-                    <h2 class="fw-bold mb-5">Final Pay System</h2>
-                                      
-
-                    <div class="form-outline mb-4">
-                        <select class="form-select form-select-lg mb-3" asp-items="Model.Units" asp-for="UnitId">
-                        </select>
-
-                        <label class="form-label" for="ddUnit">Unit/Department</label>
-                        <input type="hidden" asp-for="UnitId" />
-
-                    </div>
-
-           
-                  @* @Html.DropDownListFor(Model=>Model.Rolls,new SelectList(""),"--Select User Type--", new {@class="form-control"})*@
-
-                    <div class="form-outline mb-4">
-
-
-                        <select class="form-select" asp-items="Model.Rolls" asp-for="RollId">
-                        </select>
-
-                        <label class="form-label" for="form1UserType">User Type</label>
-                        <input type="hidden" asp-for="RollId" />
-
-                    </div>
-
-                    <div class="form-outline mb-4">
-                        <span asp-validation-for="UserName"></span>
-                        <input asp-for="UserName" class="form-control form-control-lg" />
-                        <label class="form-label" for="form1Example13">SLN Email address</label>
-                    </div>
-
-
-                    <div class="form-outline mb-4">
-                        <span asp-validation-for="Password"></span>
-                        <input asp-for="Password" class="form-control form-control-lg" />
-                        <label class="form-label" for="form1Example23">HRMS Password</label>
-                    </div>
+<section>
+    <form method="post" asp-action="Login" asp-controller="Login">
+        <p class="text-danger"> @ViewBag.Message </p>
 
 
 
-                    <!-- Submit button -->
+        <div class="form-outline mb-4">
+            <select class="form-select form-select-lg mb-3" asp-items="Model.Units" asp-for="UnitId">
+            </select>
 
 
-                    <button asp-controller="Login" class="btn btn-primary btn-lg btn-block">Sign in</button>
-                    @*<input name="__RequestVerificationToken" type="hidden" value="<token_generated_here>">*@
+            <input type="hidden" asp-for="UnitId" />
 
-                    @if (TempData["Success"] != null)
-                    {
-                        <h2> TempData["Success"] </h2>
-                    }
-                </form>
-            </div>
         </div>
-    </div>
+
+
+
+
+        <div class="form-outline mb-4">
+
+
+            <select class="form-select" asp-items="Model.Rolls" asp-for="RollId">
+            </select>
+            <input type="hidden" asp-for="RollId" />
+
+        </div>
+
+        <div class="form-outline mb-4">
+            <span asp-validation-for="UserName"></span>
+            <input asp-for="UserName" placeholder="SLN Email address" class="form-control form-control-lg" />
+
+        </div>
+
+
+        <div class="form-outline mb-4">
+            <span asp-validation-for="Password"></span>
+            <input asp-for="Password" placeholder="HRMS Password" class="form-control form-control-lg" />
+
+        </div>
+
+
+
+        <!-- Submit button -->
+
+
+        <button asp-controller="Login" class="btn btn-primary btn-lg btn-block">Sign in</button>
+
+
+        @if (TempData["Success"] != null)
+        {
+            <h2> TempData["Success"] </h2>
+        }
+    </form>
+
 
     @* @section Scripts {
     <partial name="_ValidationScriptsPartial" />
     }*@
+
+
 </section>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

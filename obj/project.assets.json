@@ -4675,11 +4675,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Working\\FinalPay\\FinaPay.csproj",
+      "projectUniqueName": "D:\\Working\\2. Pending\\FinalPay\\FinaPay.csproj",
       "projectName": "FinaPay",
-      "projectPath": "E:\\Working\\FinalPay\\FinaPay.csproj",
+      "projectPath": "D:\\Working\\2. Pending\\FinalPay\\FinaPay.csproj",
       "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "E:\\Working\\FinalPay\\obj\\",
+      "outputPath": "D:\\Working\\2. Pending\\FinalPay\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
