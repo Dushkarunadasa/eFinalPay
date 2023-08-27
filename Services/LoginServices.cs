@@ -14,27 +14,26 @@ namespace FinaPay.Services
     public class LoginServices : ILoginServices
     {
         private readonly PaySubjectsContext _db;
+      
         public LoginServices(PaySubjectsContext db)
         {
             _db = db;
+       
         }
 
         async Task<IEnumerable<SubAllowancesSubject>> ILoginServices.GetAllUnits()
         {
 
-            var list = new List<int>() { 2,3,4,5,6,8,9,12,13,14,15,16,17 };
-
+            var list = new List<int>() { 4,5,6,7,8,9,12,13,14,15,16,17,19,20,21,22,23 ,24,25,26};
             var PendingList = new List<Test1>();
             decimal total = 0;
-
-            IEnumerable<SubAllowancesSubject> units = await _db.SubAllowancesSubjects.Where(s=>list.Contains(s.SubId)).Select(s => s).ToListAsync();
+            IEnumerable<SubAllowancesSubject> units = await _db.SubAllowancesSubjects.Where(s => list.Contains(s.SubId)).Select(s => s).OrderBy(S=>S.Subject).ToListAsync();
             return units;// _db.SubAllowancesSubjects.Select(s => s).ToList();
         }
 
         async Task<IEnumerable<SubRoleTypeAllowance>> ILoginServices.GetAllUser(int ID)
         {
             IEnumerable<SubRoleTypeAllowance> UsersRole;
-
             var groupId = await _db.SubAllowancesSubjects.Where(s => s.SubId == ID).Select(s => s.Type).SingleOrDefaultAsync();
             UsersRole = await _db.SubRoleTypeAllowances.Where(s => s.RoleGroup == groupId).OrderBy(s => s.RoleOrder).ToListAsync();
             return UsersRole;
@@ -55,8 +54,7 @@ namespace FinaPay.Services
                                  join E2 in _db.SubRoleAllowances on new { a = E.SubId, b = D.Role } equals new { a = E2.Unit, b = E2.Role }
 
                                  where E2.SysCode == SysCode && E2.CatCode == catCode && E2.OfficialNo == OfficialNo && E2.Active == true && E.SubId == unitId && D.RoleOrder == Roll
-                                 select new { BaseCode = E2.BaseCode }).FirstOrDefaultAsync();             
-                
+                                 select new { BaseCode = E2.BaseCode }).FirstOrDefaultAsync();
                 
             if (!ReferenceEquals(result1, null))
             {

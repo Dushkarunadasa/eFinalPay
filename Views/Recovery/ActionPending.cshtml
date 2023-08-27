@@ -10,8 +10,7 @@
 
 <div class="card mb-4">
     <div class="card-body">
-        <p> පහත වගුවේ ලැයිස්තු ගතවන නාවික පුද්ගලයන් හට අදාල අයකර ගැනීම් ඇතුලත් කිරීම සිදුකල යුතු අතර ඒ සදහා  <span class="text-bg-info">Details</span>  ලිංකුව තුලින් පිවිසිය යුතුය. විෂයභාර නාවිකයා සියළුම අයකර ගැනීම් ඇතුලත් කිරීමට වගබලා ගත යුතුයි.</p>
-
+       අයකර ගැනීම් ඇතුලත් කර SSO (SM) වෙත ඉදිරිපත් කර නොමැති ලැයිස්තුව පහත වගුවේ දිස්වේ.
     </div>
 </div>
 
@@ -98,7 +97,7 @@
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) | *@
 
                     <a asp-controller="Recovery" asp-action="Details" asp-route-id="@item.TransId" type="button" class="btn btn-outline-primary">
-                        <i class="glyphicon glyphicon-plus-sign"></i> &nbsp;Details
+                        <i class="glyphicon glyphicon-plus-sign"></i> Details
                     </a>
                     @*@Html.ActionLink("Add", "Add", new { id=item.TransId}) *@
                     @*<div class="row">

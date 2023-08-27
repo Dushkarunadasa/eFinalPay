@@ -7,7 +7,7 @@
  <div class="page-header">
             <h2>All Received Recoveries (from SSO(SM)) </h2>
         </div>
-<table class=" table table-hover">
+<table id="datatablesSimple" class=" table table-striped">
     <thead>
         <tr class="table-secondary">
             <th>
@@ -35,6 +35,33 @@
             <th></th>
         </tr>
     </thead>
+    <tfoot>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SysCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficialNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeDt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+
+            <th></th>
+        </tr>
+    </tfoot>
     <tbody>
 @foreach (var item in Model) {
         <tr class="table-dark">
@@ -57,25 +84,14 @@
                     @Html.DisplayFor(modelItem => item.DischargeDt)
             </td>           
             <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-          
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>          
             <td>
-                    @* @Html.ActionLink("Add", "Add", new { /* id=item.PrimaryKey */ }) |
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) | *@
-
-                    <a asp-controller="PayOffice" asp-action="EditAuth" asp-route-id="@item.TransID" type="button" class="btn btn-outline-primary">
-                        <i class="glyphicon glyphicon-plus-sign"></i> &nbsp;Details
-                    </a>
-                    @*@Html.ActionLink("Add", "Add", new { id=item.TransId}) *@
-                    @*<div class="row">
-                       <button type="button" class="btn btn-outline-primary" style="width:60px">Edit</button> |
-                       <button type="button" class="btn btn-outline-danger" style="width:75px">Delete</button> |
-                       <button type="button" class="btn btn-outline-warning" style="width:75px">Details</button>
-                    </div>*@
+                <a asp-controller="PayOffice" asp-action="EditAuth" asp-route-id="@item.TransID" type="button" class="btn btn-outline-primary">
+                        <i class="glyphicon glyphicon-plus-sign"></i> Details
+                    </a>                  
             </td>
-        </tr>
-}
+        </tr>}
     </tbody>
 </table>
 

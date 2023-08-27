@@ -22,8 +22,10 @@ namespace FinaPay.Controllers
             _ILog = ILog;
             _IRec = IRec;
             _accessor = accessor;
+            _ILog.UpdateUserDetail(_accessor.HttpContext.Request.Cookies["SysCode"], _accessor.HttpContext.Request.Cookies["CatCode"], _accessor.HttpContext.Request.Cookies["officialNo"], _accessor.HttpContext.Request.Cookies["UserName"], _accessor.HttpContext.Request.Cookies["baseCode"], Convert.ToInt32(_accessor.HttpContext.Request.Cookies["UnitID"].ToString()), _accessor.HttpContext.Request.Cookies["UserRoll"]);
+
         }
-       
+
         public async Task<IActionResult> RecoveryPendingList()
         {
             IEnumerable<SubFinalPayHeadDetail> AllTrans = await _Iss.GetPendingTransRecSec(_ILog.getUnitID());

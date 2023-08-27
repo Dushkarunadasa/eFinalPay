@@ -14,5 +14,7 @@ namespace FinaPay.Services
         public IEnumerable<PayPerInfo> GetPerInfo(string SysCode, string CatCode, string OfficialNo);
         public Task< string>  GetPerInfoBaseCode(string SysCode, string CatCode, string OfficialNo);
 
+        Task <IEnumerable<SubFinalPayHeadDetail>> GetPayRecoveryPendingList(Boolean PendinfFlag);
+
     }
 }

@@ -1,4 +1,6 @@
 ﻿
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +12,9 @@
     <title>Finalpay System</title>
     <link href="~/css/styles.css" rel="stylesheet" />
     <script src="~/js/all.js" crossorigin="anonymous"></script>
+    <link href="~/css/style.css" rel="stylesheet" />
+    @*   <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />*@
+
 </head>
 <body>
     <script>0</script>
@@ -46,110 +51,283 @@
                         <a class="nav-link" asp-controller="Home" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
-
                         </a>
-
-
-
-
-
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Recovery
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-
-                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryEntry">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Subject Clerk
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if ((User.IsInRole("SubClerk")) || (User.IsInRole("Authorized")))
+                            {
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts21" aria-expanded="false" aria-controls="collapseLayouts">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    Profile Create
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
+                                <div class="collapse" id="collapseLayouts21" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if (User.IsInRole("SubClerk"))
+                                            {
+                                                <a class="nav-link" asp-controller="Home" asp-action="MasterData">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Profile Create
+                                                </a>
+                                            }
+                                            else if (User.IsInRole("Authorized"))
+                                            {
+                                                <a class="nav-link" asp-controller="Home" asp-action="MasterDataApprove">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Profile Approve
+                                                </a>
+                                            }
+                                        }
+                                         <div class="sb-sidenav-menu-heading">
+                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;Details
+                                        </div>
+                                    
+                                        <a class="nav-link" asp-controller="Home" asp-action="ProfileApprovedList">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp; &nbsp;Approved List
+                                        </a>
 
-
-                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryForwardSec">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Secretary
-                                </a>
-                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryForwardAuth">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Authorized Officer
-                                </a>
-                                <div class="sb-sidenav-menu-heading">
-                                    <i class="fa fa-list-alt" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;Details
+                                    </nav>
                                 </div>
-                                <a class="nav-link" asp-controller="Home" asp-action="ActionPending">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Action Pending
+                            }
+                        }
 
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if ((User.IsInRole("RecSubClerk")) || (User.IsInRole("SMSubClerk")) || (User.IsInRole("RecSec")) || (User.IsInRole("SMSec")) || (User.IsInRole("RecAuthorized")) || (User.IsInRole("SMAuthorized")))
+                            {
+
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    Recovery
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <a class="nav-link" asp-controller="Home" asp-action="ActionTaken">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Action Taken
+                                <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if ((User.IsInRole("RecSubClerk")) || (User.IsInRole("SMSubClerk")))
+                                            {
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryEntry">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Subject Clerk
+                                                </a>
+                                            }
+                                        }
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if ((User.IsInRole("RecSec")) || (User.IsInRole("SMSec")))
+                                            {
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryForwardSec">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Secretary
+                                                </a>
+                                            }
+                                        }
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if ((User.IsInRole("RecAuthorized")) || (User.IsInRole("SMAuthorized")))
+                                            {
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryForwardAuth">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Authorized Officer
+                                                </a>
+                                            }
+                                        }
+                                        <div class="sb-sidenav-menu-heading">
+                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;Details
+                                        </div>
+                                        <a class="nav-link" asp-controller="Home" asp-action="ActionPending">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Action Pending
+
+                                        </a>
+                                        <a class="nav-link" asp-controller="Home" asp-action="ActionTaken">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Action Taken
+                                        </a>
+                                    </nav>
+                                </div>
+                            }
+                        }
+
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if ((User.IsInRole("BaseSec")) || (User.IsInRole("BaseSubClerk")) || (User.IsInRole("BaseAuthorized")))
+                            {
+
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts6" aria-expanded="false" aria-controls="collapseLayouts">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    327 Recovery
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                            </nav>
-                        </div>
+                                <div class="collapse" id="collapseLayouts6" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if (User.IsInRole("BaseSubClerk"))
+                                            {
+
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryEntry327">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Subject Clerk
+                                                </a>
+                                            }
+                                        }
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if (User.IsInRole("BaseSec"))
+                                            {
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoverySecEntry327">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Secretary
+                                                </a>
+                                            }
+                                        }
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if (User.IsInRole("BaseAuthorized"))
+                                            {
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryAuthEntry327">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Commanding Officer
+                                                </a>
+                                            }
+                                        }
+
+                                        <div class="sb-sidenav-menu-heading">
+                                            <i class="fa fa-list-alt" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;Details
+                                        </div>
+                                        <a class="nav-link" asp-controller="Home" asp-action="ActionPending327">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Action Pending
+
+                                        </a>
+                                        <a class="nav-link" asp-controller="Home" asp-action="ActionTaken327">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Action Taken
+                                        </a>
+                                    </nav>
+                                </div>
+
+                            }
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if ((User.IsInRole("SMSubClerk")) || (User.IsInRole("SMSec")) || (User.IsInRole("SMAuthorized")))
+                            {
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    SSO(SM) Unit
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                </a>
+                                <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if (User.IsInRole("SMSubClerk"))
+                                            {
+
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryCheck">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Subject Clerk
+                                                </a>
+                                            }
+                                        }
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if (User.IsInRole("SMSec"))
+                                            {
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryCheckSec">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Secretary
+                                                </a>
+                                            }
+                                        }
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if (User.IsInRole("SMAuthorized"))
+                                            {
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryCheckAuth">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;Authorized Officer
+                                                </a>
+                                            }
+                                        }
+                                        <div class="sb-sidenav-menu-heading"> <i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;&nbsp;Details</div>
+                                        <a class="nav-link" asp-controller="Home" asp-action="PendingSSOSM">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Action Pending
+                                        </a>
+                                        <a class="nav-link" asp-controller="Home" asp-action="ActionTakenSSOSM">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Action Taken
+                                        </a>
+                                    </nav>
+                                </div>
 
 
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            SSO(SM) Unit
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryCheck">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Subject Clerk
-                                </a>
-                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryCheckSec">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Secretary
-                                </a>
-                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryCheckAuth">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Authorized Officer
-                                </a>
-                                <div class="sb-sidenav-menu-heading"> <i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;&nbsp;Details</div>
-                                <a class="nav-link" asp-controller="Home" asp-action="PendingSSOSM">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Action Pending
-                                </a>
-                                <a class="nav-link" asp-controller="Home" asp-action="ActionTakenSSOSM">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Action Taken
-                                </a>
-                            </nav>
-                        </div>
 
 
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Pay Office
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
-                        <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" asp-controller="Home" asp-action="InitialEntry">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Initial Entry
+                            }
+                        }
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if ((User.IsInRole("DDNPay")) || (User.IsInRole("PaySubClerk")) || (User.IsInRole("PaySSailor")) || (User.IsInRole("AuditSubClerk")) || (User.IsInRole("AuditSSailor")) || (User.IsInRole("AuditOfficer")) || (User.IsInRole("SSOPay")) || (User.IsInRole("PenSailor")) || (User.IsInRole("PenSSailor")) || (User.IsInRole("PenSSO")))
+                            {
+                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts1" aria-expanded="false" aria-controls="collapseLayouts">
+                                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                    Pay Office
+                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
-                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryPendingListDDNP">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Pending-DDN(Pay)
-                                </a>
-                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryForwardedListDDNP">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Forwarded-DDN(Pay)
-                                </a>
-                                <div class="sb-sidenav-menu-heading"> <i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;&nbsp;Details</div>
-                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryPendingList">
-                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                    &nbsp;&nbsp;Pending List
-                                </a>
-                            </nav>
-                        </div>
+                                <div class="collapse" id="collapseLayouts1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                     @*   <a class="nav-link" asp-controller="Home" asp-action="MasterData">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Profile Create
+                                        </a>
+                                        <a class="nav-link" asp-controller="Home" asp-action="InitialEntry">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Initial Entry
+                                        </a>*@
+                                        <a class="nav-link" asp-controller="Home" asp-action="PayRecovery">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Pay Details Entry
+                                        </a>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                            if (User.IsInRole("DDNPay"))
+                                            {
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryPendingListDDNP">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;SSO(SM)-DDN(Pay)
+                                                </a>
+                                                <a class="nav-link" asp-controller="Home" asp-action="RecoveryPendingList327DDNP">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    &nbsp;&nbsp;CO-DDN(Pay)
+                                                </a>
+                                            }
+                                        }
+                                        <a class="nav-link" asp-controller="Home" asp-action="RecoveryForwardedListDDNP">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Forwarded-DDN(Pay)
+                                        </a>
+                                        <div class="sb-sidenav-menu-heading"> <i class="fa fa-list-alt" aria-hidden="true"></i>&nbsp;&nbsp;Details</div>
+                                        <a class="nav-link" asp-controller="Home" asp-action="RecoveryPendingList">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            &nbsp;&nbsp;Pending List
+                                        </a>
+                                    </nav>
+                                </div>
+
+                            }
+                        }
 
                         <div class="sb-sidenav-menu-heading">Interface</div>
 
@@ -163,16 +341,12 @@
                                 <a class="nav-link" asp-controller="Home" asp-action="UserSetting">      <i class="fa fa-caret-right" aria-hidden="true"></i> &nbsp;&nbsp;User Change</a>
                             </nav>
                         </div>
-
-
-
                         <a class="btn btn-warning" asp-controller="Login" asp-action="Logout">
                             <i class="fa fa-user-o" aria-hidden="true"></i>
                             &nbsp;&nbsp; Logout
                         </a>
-
-
                     </div>
+
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
@@ -204,7 +378,7 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="~/js/simple-datatables.js" crossorigin="anonymous"></script>
     <script src="~/js/datatables-simple-demo.js"></script>
     <script src="~/js/scripts.js"></script>
     @await RenderSectionAsync("Scripts", required: false)

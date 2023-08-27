@@ -21,6 +21,8 @@ namespace FinaPay.Controllers
             _ILog = ILog;
             _IRec = IRec;
             _accessor = accessor;
+            _ILog.UpdateUserDetail(_accessor.HttpContext.Request.Cookies["SysCode"], _accessor.HttpContext.Request.Cookies["CatCode"], _accessor.HttpContext.Request.Cookies["officialNo"], _accessor.HttpContext.Request.Cookies["UserName"], _accessor.HttpContext.Request.Cookies["baseCode"], Convert.ToInt32(_accessor.HttpContext.Request.Cookies["UnitID"].ToString()), _accessor.HttpContext.Request.Cookies["UserRoll"]);
+
         }
 
 
@@ -43,13 +45,11 @@ namespace FinaPay.Controllers
             {
                 return NotFound();
             }
-
             IEnumerable<SubPayRecoveryContrat> ListRec = await _IRec.GetEnteredRecovertList(id);
             return View(ListRec);
 
-
         }
-        public async Task<IActionResult> ActionPending() 
+        public async Task<IActionResult> ActionPending()
         {
             IEnumerable<SubFinalPayHeadDetail> AllTrans = await _Iss.GetActionPendingTrans(_ILog.getUnitID());
             return View(AllTrans);
@@ -62,17 +62,14 @@ namespace FinaPay.Controllers
 
         public async Task<IActionResult> ForwardRecovery(int id)
         {
-
             var recresult = await _IRec.GetEnteredRecovertList(id);
-
-            if (recresult == null ||recresult.Count() <=0)
+            if (recresult == null || recresult.Count() <= 0)
             {
                 ViewBag.Error = "Please enter recovery before forward to Secretary.If no recoveries, then Nil report is required";
-               // return NotFound();
+                // return NotFound();
             }
             else
             {
-
                 var result = await _IRec.ForwardSubRecovery(id, _ILog.getUnitID(), 1);
                 string IP = GetIPAddress();
                 await _IRec.updateLog(new SubFinalPayLogDetail { TransId = id, UnitId = _ILog.getUnitID(), UserId = _ILog.getUserName().ToString(), LogDetails = _ILog.GetUserRoll().ToString() + " forwarded tansaction to secretary", Logtime = DateTime.Now, Ip = IP });
@@ -88,21 +85,28 @@ namespace FinaPay.Controllers
             {
                 return NotFound();
             }
-
             IEnumerable<SubPayRecoveryContrat> ListRec = await _IRec.GetEnteredRecovertList(id);
             return View(ListRec);
-
-
         }
 
+
         [Route("[Action]/{id}/{ItemCode}")]
-        public async Task<IActionResult> RecNDelete(int id,string ItemCode)
+        public async Task<IActionResult> PayRecDelete(int id, string ItemCode)
+        {
+            var result = await _IRec.DeletePayRecovery(id, ItemCode.Trim());
+            string IP = GetIPAddress();
+            await _IRec.updateLog(new SubFinalPayLogDetail { TransId = id, UnitId = _ILog.getUnitID(), UserId = _ILog.getUserName().ToString(), LogDetails = _ILog.GetUserRoll().ToString() + " deleted " + ItemCode, Logtime = DateTime.Now, Ip = IP });
+
+            return RedirectToAction( "RecList","PayOffice",new {id});
+        }
+        [Route("[Action]/{id}/{ItemCode}")]
+        public async Task<IActionResult> RecNDelete(int id, string ItemCode)
         {
             var result = await _IRec.DeleteRecovery(id, ItemCode.Trim());
             string IP = GetIPAddress();
-            await _IRec.updateLog(new SubFinalPayLogDetail { TransId = id, UnitId = _ILog.getUnitID(), UserId = _ILog.getUserName().ToString(), LogDetails = _ILog.GetUserRoll().ToString() + " deleted "+ ItemCode, Logtime = DateTime.Now, Ip = IP });
+            await _IRec.updateLog(new SubFinalPayLogDetail { TransId = id, UnitId = _ILog.getUnitID(), UserId = _ILog.getUserName().ToString(), LogDetails = _ILog.GetUserRoll().ToString() + " deleted " + ItemCode, Logtime = DateTime.Now, Ip = IP });
 
-            return RedirectToAction("Edit", new {id});
+            return RedirectToAction("Edit", new { id });
         }
 
         //[Route("[Action])/{id}/{ItemCode}")]
@@ -117,12 +121,10 @@ namespace FinaPay.Controllers
 
         public async Task<IActionResult> RecoveryEntry(int? id)
         {
-
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-
             IEnumerable<SubFinalPayItem> ItemList = await _IRec.AllItemsUnitWise(_ILog.getUnitID());
             var FormDetails = new SubRecoveryEntryContract();
             FormDetails.ItemCode = new List<SelectListItem>();
@@ -137,11 +139,7 @@ namespace FinaPay.Controllers
                 FormDetails.ItemCode.Add(new SelectListItem { Text = IList.ItemDescription, Value = IList.ItemCode.ToString() });
             }
             FormDetails.TransId = id;
-
-
             return View(FormDetails);
-
-
 
         }
 
@@ -152,7 +150,7 @@ namespace FinaPay.Controllers
 
             Boolean formvalid = true;
             int TransId = (int)obj.TransId;
-            string ItemCode=obj.ItemName;
+            string ItemCode = obj.ItemName;
 
             if ("001" == obj.ItemName.ToString().Trim())
             {
@@ -162,7 +160,7 @@ namespace FinaPay.Controllers
                     formvalid = false;
                 }
             }
-            else if (obj.Amount<=0)
+            else if (obj.Amount <= 0)
             {
                 ViewBag.Message = "Please enter amount";
                 formvalid = false;
@@ -178,9 +176,9 @@ namespace FinaPay.Controllers
             string remarks = obj.Remarks;
             if (formvalid == true)
             {
-                ViewBag.Message  = await _IRec.UpdateFinalPayItemList(TransId, _ILog.getUnitID(), ItemCode.Trim(), TransAmount, remarks);
+                ViewBag.Message = await _IRec.UpdateFinalPayItemList(TransId, _ILog.getUnitID(), ItemCode.Trim(), TransAmount, remarks);
                 string IP = GetIPAddress();
-                await _IRec.updateLog(new SubFinalPayLogDetail { TransId = TransId, UnitId = _ILog.getUnitID(), UserId = _ILog.getUserName().ToString(), LogDetails = _ILog.GetUserRoll().ToString() + " Inserted :" + ItemCode + "Amount :"+TransAmount, Logtime = DateTime.Now, Ip = IP });
+                await _IRec.updateLog(new SubFinalPayLogDetail { TransId = TransId, UnitId = _ILog.getUnitID(), UserId = _ILog.getUserName().ToString(), LogDetails = _ILog.GetUserRoll().ToString() + " Inserted :" + ItemCode + "Amount :" + TransAmount, Logtime = DateTime.Now, Ip = IP });
 
             }
 
@@ -204,12 +202,12 @@ namespace FinaPay.Controllers
             }
             else
             {
-                return RedirectToAction("Edit",new { id = TransId });
+                return RedirectToAction("Edit", new { id = TransId });
             }
 
 
-          
-           
+
+
         }
 
         private string GetIPAddress()

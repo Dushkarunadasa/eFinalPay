@@ -54,6 +54,7 @@ namespace FinaPay.Models
         public virtual DbSet<SubExtraDutyDetail> SubExtraDutyDetails { get; set; } = null!;
         public virtual DbSet<SubExtraDutyDetailsHistory> SubExtraDutyDetailsHistories { get; set; } = null!;
         public virtual DbSet<SubExtraDutyMaster> SubExtraDutyMasters { get; set; } = null!;
+        public virtual DbSet<SubFinalPay327Head> SubFinalPay327Heads { get; set; } = null!;
         public virtual DbSet<SubFinalPay327List> SubFinalPay327Lists { get; set; } = null!;
         public virtual DbSet<SubFinalPayDetail> SubFinalPayDetails { get; set; } = null!;
         public virtual DbSet<SubFinalPayDischargeType> SubFinalPayDischargeTypes { get; set; } = null!;
@@ -93,7 +94,7 @@ namespace FinaPay.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=10.10.1.232;Database=PaySubjects;User id=sa;password=SDUAdmin@2019");
+                optionsBuilder.UseSqlServer("Server=10.10.1.232;Database=PaySubjects;User ID=sa;Password=SDUAdmin@2019;");
             }
         }
 
@@ -1410,6 +1411,65 @@ namespace FinaPay.Models
                 entity.Property(e => e.Tsubject).HasColumnName("TSubject");
             });
 
+            modelBuilder.Entity<SubFinalPay327Head>(entity =>
+            {
+                entity.HasKey(e => e.TransId)
+                    .HasName("PK_Sub_FinalPay_327_Trans");
+
+                entity.ToTable("Sub_Final_Pay_327_Head");
+
+                entity.Property(e => e.TransId)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.AuditOfficer).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.AuditStaff).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.BaseCode)
+                    .HasMaxLength(10)
+                    .IsFixedLength();
+
+                entity.Property(e => e.CurrentPayMonth)
+                    .HasMaxLength(6)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.Ddnpay)
+                    .HasColumnName("DDNPay")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.DeductAmount)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.FinalPayAction).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Reject).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Sso)
+                    .HasColumnName("SSO")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Subject).HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Tconfirm)
+                    .HasColumnName("TConfirm")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Tforward)
+                    .HasColumnName("TForward")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Total327)
+                    .HasColumnType("decimal(18, 2)")
+                    .HasDefaultValueSql("((0))");
+
+                entity.Property(e => e.Tsave)
+                    .HasColumnName("TSave")
+                    .HasDefaultValueSql("((0))");
+            });
+
             modelBuilder.Entity<SubFinalPay327List>(entity =>
             {
                 entity.HasKey(e => new { e.TransId, e.OrderId, e.PayMonth });
@@ -1526,6 +1586,11 @@ namespace FinaPay.Models
                 entity.ToTable("Sub_Final_Pay_Discharge_Types");
 
                 entity.Property(e => e.Des).HasMaxLength(100);
+
+                entity.Property(e => e.Type)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .IsFixedLength();
             });
 
             modelBuilder.Entity<SubFinalPayHeadDetail>(entity =>
@@ -1556,6 +1621,8 @@ namespace FinaPay.Models
                 entity.Property(e => e.BaseCode)
                     .HasMaxLength(10)
                     .IsFixedLength();
+
+                entity.Property(e => e.CheckPayment).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.ChequeDt).HasColumnType("date");
 
@@ -1669,7 +1736,8 @@ namespace FinaPay.Models
                 entity.Property(e => e.UnitId).HasColumnName("Unit_ID");
 
                 entity.Property(e => e.UserId)
-                    .HasMaxLength(10)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
                     .HasColumnName("UserID")
                     .IsFixedLength();
 

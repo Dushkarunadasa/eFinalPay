@@ -10,7 +10,8 @@ using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using System.Reflection.Metadata;
 using System.Security.Claims;
-
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 namespace FinaPay.Controllers
@@ -20,31 +21,37 @@ namespace FinaPay.Controllers
         private readonly IMainServices _Iss;
         private readonly IPayDetails _IPayIss;
         private readonly ILoginDetails _ILog;
-        public HomeController(IMainServices Iss, IPayDetails IPayIss, ILoginDetails ILog)
+        private readonly IBaseRecovery _Base;
+        private IHttpContextAccessor _accessor;
+
+        public HomeController(IMainServices Iss, IPayDetails IPayIss, ILoginDetails ILog, IBaseRecovery _base, IHttpContextAccessor accessor)
         {
             _Iss = Iss;
             _IPayIss = IPayIss;
             _ILog = ILog;
+            _Base = _base;
+            _accessor = accessor;
+            _ILog.UpdateUserDetail(_accessor.HttpContext.Request.Cookies["SysCode"], _accessor.HttpContext.Request.Cookies["CatCode"], _accessor.HttpContext.Request.Cookies["officialNo"], _accessor.HttpContext.Request.Cookies["UserName"], _accessor.HttpContext.Request.Cookies["baseCode"], Convert.ToInt32(_accessor.HttpContext.Request.Cookies["UnitID"].ToString()), _accessor.HttpContext.Request.Cookies["UserRoll"]);
+
         }
 
         [Authorize]
         public IActionResult Index()
         {
-           
-           return View();
+
+            return View();
         }
         public IActionResult Authenticate()
         {
             // Login Process
-            var userType=string.Empty;
+            var userType = string.Empty;
             var Unit = _ILog.getUnitID();
             var Role = _ILog.GetUserRoll();
-            if (Unit==14 || Unit==15 || Unit ==16 || Unit == 17 ||  Unit == 2 || Unit == 8 || Unit == 12)
+            if (Unit == 14 || Unit == 15 || Unit == 16 || Unit == 17 || Unit == 2 || Unit == 8 || Unit == 12 || Unit == 13 || Unit == 15 || Unit == 24||Unit==25||Unit==26)
             {
                 if (Role == "1")
                 {
                     userType = "RecSubClerk";
-                
                 }
                 else if (Role == "2")
                 {
@@ -55,12 +62,12 @@ namespace FinaPay.Controllers
                     userType = "RecAuthorized";
 
                 }
-                if (Unit==16)
+                if (Unit == 16)
                 {
                     if (Role == "1")
                     {
                         userType = "SMSubClerk";
-                     
+
                     }
                     else if (Role == "2")
                     {
@@ -71,11 +78,11 @@ namespace FinaPay.Controllers
 
                         userType = "SMAuthorized";
                     }
-                
+
                 }
 
             }
-            if (Unit==9)
+            if (Unit == 9)
             {
                 if (Role == "1")
                 {
@@ -105,7 +112,7 @@ namespace FinaPay.Controllers
                 {
                     userType = "SSOPay";
                 }
-               
+
                 else if (Role == "8")
                 {
                     userType = "PenSailor";
@@ -118,20 +125,59 @@ namespace FinaPay.Controllers
                 {
                     userType = "PenSSO";
                 }
-               
+
+            }
+            if (Unit == 4)
+            {
+                if (Role == "1")
+                {
+                    userType = "BaseSubClerk";
+
+                }
+                else if (Role == "2")
+                {
+                    userType = "BaseSec";
+                }
+                else if (Role == "3")
+                {
+                    userType = "BaseAuthorized";
+
+                }
+            }
+            if (Unit == 3 || Unit == 5 || Unit == 6 || Unit == 19 || Unit == 20 || Unit == 21 || Unit == 22 || Unit == 23)
+            {
+                if (Role == "1")
+                {
+                    userType = "SubClerk";
+                }
+
+                else if (Role == "2")
+                {
+                    userType = "Authorized";
+                }
             }
 
 
+            //var claims = new List<Claim>();
+            //claims.Add(new Claim(ClaimTypes.Email, _ILog.getUserName()));      
+            //claims.Add(new Claim(ClaimTypes.Role , userType));
+            //claims.Add(new Claim(ClaimTypes.Actor , _ILog.getUnitID().ToString()));
+            ////Claims identity
+            //var idenitity = new ClaimsIdentity(claims, "Final login");
+            ////Claims Pricipls
+            //var userPrincipal = new ClaimsPrincipal(new[] { idenitity });
+            //HttpContext.SignInAsync(userPrincipal);
+            //return RedirectToAction("Index");
+
             var claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.Email, _ILog.getUserName()));      
-            claims.Add(new Claim(ClaimTypes.Role , userType));
-            claims.Add(new Claim(ClaimTypes.Actor , _ILog.getUnitID().ToString()));
-            //Claims identity
-            var idenitity = new ClaimsIdentity(claims, "Final login");
-            //Claims Pricipls
-            var userPrincipal = new ClaimsPrincipal(new[] { idenitity });
-            HttpContext.SignInAsync(userPrincipal);
-            return RedirectToAction("Index");
+            claims.Add(new Claim(ClaimTypes.Email, _ILog.getUserName()));
+            claims.Add(new Claim(ClaimTypes.Role, userType));
+            claims.Add(new Claim(ClaimTypes.Actor, _ILog.getUnitID().ToString()));
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principle = new ClaimsPrincipal(identity);
+            var props = new AuthenticationProperties();
+            HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principle, props).Wait();
+            return RedirectToAction("Index", "Home");
         }
         [HttpGet]
         [AllowAnonymous]
@@ -180,33 +226,56 @@ namespace FinaPay.Controllers
             return RedirectToAction("RecoveryPendingListAuth", "SSOSM");
         }
 
-        [Authorize(Roles = "PaySubClerk")]     
+        [Authorize(Roles = "PaySubClerk")]
         public IActionResult InitialEntry()
         {
             return RedirectToAction("Index", "PayOffice");
         }
-       
-    
+
+        [Authorize(Roles = "PaySubClerk")]
+        public IActionResult PayRecovery()
+        {
+            return RedirectToAction("PayRecovery", "PayOffice");
+        }
+        [Authorize(Roles = "PaySubClerk,SubClerk")]
+        public IActionResult MasterData()
+        {
+            return RedirectToAction("EnteredList", "PayOffice");
+        }
+
+        [Authorize(Roles = "Authorized")]
+        public IActionResult MasterDataApprove()
+        {
+            return RedirectToAction("EnteredListApprove", "PayOffice");
+        }
+
+        [Authorize(Roles = "SubClerk,Authorized")]
+        public IActionResult ProfileApprovedList()
+        {
+            return RedirectToAction("EnteredListApproved", "PayOffice");
+        }
+
+
         [Authorize(Roles = "SMSubClerk,RecSubClerk")]
-        
+
         public IActionResult RecoveryEntry()
         {
             return RedirectToAction("RecoveryPendingList", "Recovery");
         }
-      
-        [Authorize(Roles = "SMSec,RecSec")] 
+
+        [Authorize(Roles = "SMSec,RecSec")]
         public IActionResult RecoveryForwardSec()
         {
-            return RedirectToAction("RecoveryPendingList","RecSec");
+            return RedirectToAction("RecoveryPendingList", "RecSec");
         }
 
-     
-        [Authorize(Roles = "SMAuthorized,RecAuthorized")] 
+
+        [Authorize(Roles = "SMAuthorized,RecAuthorized")]
         public IActionResult RecoveryForwardAuth()
         {
             return RedirectToAction("RecoveryPendingList", "RecAuthorize");
         }
-        [Authorize(Roles = "SMSec,RecSec")] 
+        [Authorize(Roles = "SMSec,RecSec")]
         public IActionResult UserSetting()
         {
             return RedirectToAction("Index", "User");
@@ -218,12 +287,12 @@ namespace FinaPay.Controllers
         {
             return RedirectToAction("RecoveryPendingListDDN", "PayOffice");
         }
-        [Authorize(Roles = "DDNPay")]
+        [Authorize(Roles = "DDNPay,SSOPay,PaySubClerk,PaySSailor,AuditSubClerk,AuditSSailor,AuditOfficer")]
         public IActionResult RecoveryForwardedListDDNP()
         {
             return RedirectToAction("RecoveryForwardedListDDN", "PayOffice");
         }
-        [Authorize(Roles = "DDNPay")]
+        [Authorize(Roles = "DDNPay,SSOPay,PaySubClerk,PaySSailor,AuditSubClerk,AuditSSailor,AuditOfficer")]
         public IActionResult RecoveryPendingList()
         {
             return RedirectToAction("RecoveryPendingList", "PayOffice");
@@ -240,6 +309,42 @@ namespace FinaPay.Controllers
         }
 
 
+        [Authorize(Roles = "BaseSubClerk")]
+        public IActionResult RecoveryEntry327()
+        {
+            return RedirectToAction("Edit", "Base");
+        }
+
+
+        [Authorize(Roles = "BaseSec")]
+        public IActionResult RecoverySecEntry327()
+        {
+            return RedirectToAction("Edit", "Base");
+        }
+
+
+        [Authorize(Roles = "BaseAuthorized")]
+        public IActionResult RecoveryAuthEntry327()
+        {
+            return RedirectToAction("Edit", "Base");
+        }
+
+        [Authorize(Roles = "BaseSec,BaseSubClerk,BaseAuthorized")]
+        public IActionResult ActionPending327()
+        {
+            return RedirectToAction("List", "Base", new { @ActionTaken = false });
+        }
+
+        [Authorize(Roles = "BaseSubClerk,BaseSec,BaseAuthorized")]
+        public IActionResult ActionTaken327()
+        {
+            return RedirectToAction("List", "Base", new { @ActionTaken = true });
+        }
+        [Authorize(Roles = "DDNPay")]
+        public IActionResult RecoveryPendingList327DDNP()
+        {
+            return RedirectToAction("Allowance327DDN", "PayOffice");
+        }
 
     }
 

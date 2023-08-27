@@ -3,6 +3,7 @@ using FinaPay.Models;
 using FinaPay.PayModels;
 using FinaPay.Repositary;
 using FinaPay.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -18,7 +19,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();//To get the  Client IP
-builder.Services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();//To get the  Client IP
+
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+//builder.Services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();//To get the  Client IP
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
@@ -41,10 +44,11 @@ builder.Services.AddScoped<IRepositary, Repositary>(); //Rest API
 builder.Services.AddScoped<IRecoveryServices, RecoveryServices>();
 builder.Services.AddScoped<IPayDetails, PayDetails>();
 builder.Services.AddScoped<ILoginDetails, LoginDetails>();
+builder.Services.AddScoped<IBaseRecovery,BaseRecovery>();
 
 
-
-builder.Services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config =>
+//builder.Services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config =>
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(config =>
 {
     config.Cookie.Name = "FinalPay.Cookie";
     config.LoginPath = "/Home/Authenticate";
@@ -53,7 +57,12 @@ builder.Services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", config 
 
 builder.Services.AddAuthorization(options =>
 {
+    options.AddPolicy("RequiredSubject", policy => policy.RequireRole("SubClerk"));
+    options.AddPolicy("RequiredAuthorize", policy => policy.RequireRole("Authorized"));
 
+    options.AddPolicy("RequiredBaseSubjectClerk", policy => policy.RequireRole("BaseSubClerk"));
+    options.AddPolicy("RequiredBaseSecretary", policy => policy.RequireRole("BaseSec"));
+    options.AddPolicy("RequiredBaseAuthorize", policy => policy.RequireRole("BaseAuthorized"));
 
     options.AddPolicy("RequiredRecSubjectClerk", policy => policy.RequireRole("RecSubClerk"));
     options.AddPolicy("RequiredRecSecretary", policy => policy.RequireRole("RecSec"));
@@ -65,11 +74,9 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("RequiredPaySubjectClerk", policy => policy.RequireRole("PaySubClerk"));
     options.AddPolicy("RequiredPaySSailor", policy => policy.RequireRole("PaySSailor"));
-
     options.AddPolicy("RequiredAuditSailor", policy => policy.RequireRole("AuditSubClerk"));
     options.AddPolicy("RequiredAuditSSailor", policy => policy.RequireRole("AuditSSailor"));
     options.AddPolicy("RequiredAuditOfficer", policy => policy.RequireRole("AuditOfficer"));
-
     options.AddPolicy("RequiredSSOPay", policy => policy.RequireRole("SSOPay"));
     options.AddPolicy("RequiredDDNPay", policy => policy.RequireRole("DDNPay"));
     options.AddPolicy("RequiredPenSailor", policy => policy.RequireRole("PenSailor"));
@@ -93,13 +100,13 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 //app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseForwardedHeaders();
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseAuthentication();
-
 app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",

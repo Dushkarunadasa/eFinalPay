@@ -11,8 +11,7 @@
 <div class="card mb-4">
     <div class="card-body">
 
-       පහත වගුෙව් නම් සඳහන් නාවිකයින් හට අදාල අයකිරිම් එක් එක් ෙදපාර්තෙම්න්තුව
-
+        පහත වගුවේ නම් සඳහන් නාවිකයින් හට අදාල අයකිරිම් එක් එක් දෙපාර්තමේන්තු විසින් ඉදිරිපත් කල යුතු අතර මේවන තෙක් අයකිරීම් ඉදිරිපත් කර නොමැති ආයතන පහත වගුවේ Pending තීරුවේ හී පෙන්වනු ලබයි.තවද වැඩි විස්තර Details ලිංකුව මගින් නිරීක්ෂණය කල හැක.
     </div>
 </div>
 
@@ -40,10 +39,10 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Pending)
-            </th> 
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Amount)
-            </th> 
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsPending)
             </th>
@@ -51,45 +50,45 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr class="table-dark">
-            <td>
+        @foreach (var item in Model)
+        {
+            <tr class="table-dark">
+                <td>
                     @Html.DisplayFor(modelItem => item.TransID)
-            </td>
-            <td>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.SysCode)
-            </td>
-            <td>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.CatCode)
-            </td>
-            <td>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.OfficialNo)
-            </td>
-            <td>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.DischargeDt)
-            </td>
-            <td>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Pending)
-            </td>
-            <td>
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPending)
-            </td>
-            <td>
-                    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsPending)
+                </td>
+                <td>
+
 
                     <a asp-controller="SSOSM" asp-action="Edit" asp-route-id="@item.TransID" type="button" class="btn btn-outline-primary">
-                        <i class="glyphicon glyphicon-plus-sign"></i> &nbsp;Details
+                        <i class="glyphicon glyphicon-plus-sign"></i> Details
                     </a>
-                  
-            </td>
-        </tr>
-}
+
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
-

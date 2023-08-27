@@ -1,4 +1,5 @@
 ﻿using FinaPay.Contract;
+using FinaPay.Models;
 using FinaPay.PayModels;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +8,11 @@ namespace FinaPay.Services
     public class PayDetails : IPayDetails
     {
         private Payroll_SLNavyContext _db;
-
-        public PayDetails(Payroll_SLNavyContext db)
+        private readonly PaySubjectsContext _PaySubdb;
+        public PayDetails(Payroll_SLNavyContext db, PaySubjectsContext paySubdb)
         {
             _db = db;
+            _PaySubdb = paySubdb;
         }
         IEnumerable<PayBase> IPayDetails.GetBaseList()
         {
@@ -55,6 +57,53 @@ namespace FinaPay.Services
             var t1= _db.PayPerInfos.Where(s => s.SysCode == SysCode && s.CatCode == CatCode && s.OfficerCode == OfficialNo).Select(S => S.BaseCode).FirstOrDefaultAsync();
            
             return t1.Result.ToString();
+        }
+        public async Task<IEnumerable<SubFinalPayHeadDetail>> GetPayRecoveryPendingList( Boolean Authorized)
+        {
+
+            var Details = await _db.PayBases.ToListAsync();
+            //string basecode = //Details.Where(s => s.BaseCode == "1018").Select(S => S.BaseName).ToString();
+            IEnumerable<SubFinalPayHeadDetail> AllTrans = await (from H in _PaySubdb.SubFinalPayHeadDetails
+                                                                 join k in _PaySubdb.SubFinalPayDischargeTypes on H.Type equals k.Type                                                                
+                                                                 select new SubFinalPayHeadDetail
+                                                                 {
+                                                                     TransId = H.TransId,
+                                                                     SysCode = H.SysCode,
+                                                                     CatCode = H.CatCode,
+                                                                     OfficialNo = H.OfficialNo,
+                                                                     Type = k.Des,
+                                                                     NgReference = H.NgReference,
+                                                                     DischargeDt = H.DischargeDt,
+                                                                     BaseCode = H.BaseCode,
+                                                                     PForm = H.PForm,
+                                                                     PFormPath = H.PFormPath,
+                                                                     BankCode = H.BankCode,
+                                                                     BranchCode = H.BranchCode,
+                                                                     AccountNo = H.AccountNo,
+                                                                     VoucherNo = H.VoucherNo,
+                                                                     VoucherDes = H.VoucherDes,
+                                                                     ChequeNo = H.ChequeNo,
+                                                                     ChequeDt = H.ChequeDt,
+                                                                     PaymentDt = H.PaymentDt,
+                                                                     ActionComplete = H.ActionComplete,
+                                                                     Remarks = H.Remarks,
+                                                                     Ddnpay = H.Ddnpay,
+                                                                     PaySubClerk = H.PaySubClerk,
+                                                                     PaySsailor = H.PaySsailor,
+                                                                     AuditSubClerk = H.AuditSubClerk,
+                                                                     AuditSsailor = H.AuditSsailor,
+                                                                     AuditOfficer = H.AuditOfficer,
+                                                                     Ssopay = H.Ssopay,
+                                                                     PenSailor = H.PenSailor,
+                                                                     PenSsailor = H.PenSsailor,
+                                                                     Reject = H.Reject,
+                                                                     RejectedReason = H.RejectedReason,
+                                                                     RejectedBy = H.RejectedBy,
+                                                                     RejectedOn = H.RejectedOn
+                                                                 }).ToListAsync();
+
+
+            return AllTrans;
         }
     }
 }

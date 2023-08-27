@@ -23,7 +23,7 @@ namespace FinaPay.HRMSModels
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server=10.10.1.215;user=sa;password=SDUAdmin@2019;database=HRISLIVE");
+                optionsBuilder.UseSqlServer("server=10.10.1.215;user=pay;password=Pay#System_Pass@2022;database=HRISLIVE");
             }
         }
 

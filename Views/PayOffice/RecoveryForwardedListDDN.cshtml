@@ -7,7 +7,7 @@
  <div class="page-header">
             <h2>All Forwarded Recoveries to Final Pay Unit </h2>
         </div>
-<table class=" table table-hover">
+<table id="datatablesSimple" class=" table table-striped">
     <thead>
         <tr class="table-secondary">
             <th>
@@ -65,7 +65,7 @@
                     @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) | *@
 
                     <a asp-controller="PayOffice" asp-action="RecDetails" asp-route-id="@item.TransID" type="button" class="btn btn-outline-primary">
-                        <i class="glyphicon glyphicon-plus-sign"></i> &nbsp;Details
+                        <i class="glyphicon glyphicon-plus-sign"></i> Details
                     </a>
                     @*@Html.ActionLink("Add", "Add", new { id=item.TransId}) *@
                     @*<div class="row">

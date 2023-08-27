@@ -54,20 +54,22 @@ namespace FinaPay.Contract
         public bool PForm { get; set; }
         public string? PFormPath { get; set; }
 
+      
         public List<SelectListItem> Bases { get; set; }
         [Required]
         public string BaseCode { get; set; }
 
+        public bool CheckPayment { get; set; }
         public List<SelectListItem> Bank { get; set; }
-        [Required]
+       
         public string BankCode { get; set; }
 
         public List<SelectListItem> Branch { get; set; }
-        [Required]
+       
         public string BranchCode { get; set; }
 
         public List<SelectListItem> Account { get; set; }
-        [Required]
+   
         public int? AccountNo { get; set; }
         public string? VoucherNo { get; set; }
         public string? VoucherDes { get; set; }

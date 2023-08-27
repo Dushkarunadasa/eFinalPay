@@ -38,5 +38,9 @@ namespace FinaPay.Models
         public string? RejectedReason { get; set; }
         public string? RejectedBy { get; set; }
         public DateTime? RejectedOn { get; set; }
+        public bool? CheckPayment { get; set; }
+        public bool? SubjectClerk { get; set; }
+        public bool? Authorized { get; set; }
+        public int? Unit { get; set; }
     }
 }

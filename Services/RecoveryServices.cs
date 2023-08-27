@@ -1,11 +1,13 @@
 ﻿using FinaPay.Contract;
 using FinaPay.Models;
 using FinaPay.PayModels;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.ServiceModel.Channels;
 
@@ -15,14 +17,65 @@ namespace FinaPay.Services
     {
         private readonly PaySubjectsContext _IRec;
         private readonly ILoginDetails _ILog;
+        private IHttpContextAccessor _accessor;
+        private Payroll_SLNavyContext _IPay;
 
-        public RecoveryServices(PaySubjectsContext IRec, ILoginDetails ILog)
+        public RecoveryServices(PaySubjectsContext IRec, ILoginDetails ILog, IHttpContextAccessor accessor, Payroll_SLNavyContext iPay)
 
         {
             this._IRec = IRec;
             this._ILog = ILog;
+            _accessor = accessor;
+            _ILog.UpdateUserDetail(_accessor.HttpContext.Request.Cookies["SysCode"], _accessor.HttpContext.Request.Cookies["CatCode"], _accessor.HttpContext.Request.Cookies["officialNo"], _accessor.HttpContext.Request.Cookies["UserName"], _accessor.HttpContext.Request.Cookies["baseCode"], Convert.ToInt32(_accessor.HttpContext.Request.Cookies["UnitID"].ToString()), _accessor.HttpContext.Request.Cookies["UserRoll"]);
+            _IPay = iPay;
         }
+        async Task<IEnumerable<SubFinalPayItem>> IRecoveryServices.AllPayItems()
+        {
+            return await (from L in _IPay.PayItems
+                          orderby L.ItemCategory
+                          select new SubFinalPayItem { ItemCat = L.ItemCategory, ItemCode = L.ItemCode, Amount = 0, ItemDescription = L.ItemName, DaysCal = true }).ToListAsync();
+        }
+        async Task<IEnumerable<SubFinalPayItem>> IRecoveryServices.AllPayItemFromLastPay(int TransId, int UnitID)
+        {
+            string ASysCode;
+            string ACatcode;
+            string AOfficerCode;
 
+            var FinalPayDetails = _IRec.SubFinalPayHeadDetails.Where(S => S.TransId == TransId).FirstOrDefault();
+            ASysCode = FinalPayDetails.SysCode;
+            ACatcode = FinalPayDetails.CatCode;
+            AOfficerCode = FinalPayDetails.OfficialNo;
+
+            List<SubFinalPayItem> MasterFiledItemList = await (from L in _IPay.PayItemMonthlyTrans
+                                                    join I in _IPay.PayItems on new { ItemCode = L.ItemCode, ItemCat = L.ItemCategory } equals
+                                                    new { ItemCode = I.ItemCode, ItemCat = I.ItemCategory }
+                                                    where L.SysCode == ASysCode && L.CatCode == ACatcode && L.OfficerCode == AOfficerCode && I.ItemCategory == "A" && I.Type == "F"
+                                                    orderby L.ItemCode
+                                                    select new SubFinalPayItem { ItemCat = L.ItemCategory, ItemCode = L.ItemCode, Amount = L.Amount, ItemDescription = I.ItemName, DaysCal = true }).ToListAsync();
+            List<SubFinalPayItemList> AlreadyInsertedItems =await _IRec.SubFinalPayItemLists.Where(S => S.TransId == TransId).ToListAsync();
+
+              var ar=from  A in MasterFiledItemList 
+                     join BList in AlreadyInsertedItems on A.ItemCode equals BList.ItemCode into ExceptList
+                     from AB in ExceptList.DefaultIfEmpty()
+                          select new 
+                          { 
+                              ItemCat =A?.ItemCode?? String.Empty, 
+                              ItemCode = A?.ItemCode?? string.Empty,                    
+                              DaysCal = AB.Qty
+
+                          };
+
+
+            return await (from L in _IPay.PayItemMonthlyTrans
+                          join I in _IPay.PayItems on new { ItemCode = L.ItemCode, ItemCat = L.ItemCategory } equals
+                          new { ItemCode = I.ItemCode, ItemCat = I.ItemCategory }
+                          where L.SysCode == ASysCode && L.CatCode == ACatcode && L.OfficerCode == AOfficerCode && I.ItemCategory == "A" && I.Type == "F"
+                          orderby L.ItemCode
+                          select new SubFinalPayItem { ItemCat = L.ItemCategory, ItemCode = L.ItemCode, Amount = L.Amount, ItemDescription = I.ItemName, DaysCal = true }).ToListAsync();
+
+            //return await _IRec.SubFinalPayItems.OrderBy(s => s.ItemCode).Where(s => s.Unit == UnitID).ToListAsync();
+
+        }
         async Task<IEnumerable<SubFinalPayItem>> IRecoveryServices.AllItemsUnitWise(int UnitID)
         {
             return await _IRec.SubFinalPayItems.OrderBy(s => s.ItemCode).Where(s => s.Unit == UnitID).ToListAsync();
@@ -72,11 +125,21 @@ namespace FinaPay.Services
                           select new SubPayRecoveryContrat { TransID = I.TransId, ItemCode = I.ItemCode, ItemName = L.ItemDescription, Amount = Convert.ToDecimal(I.Amount), Remarks = I.Remarks }).ToListAsync();
 
 
-
-
         }
 
+        async Task<IEnumerable<SubPayRecoveryContrat>> IRecoveryServices.GetEnteredPayRecovertList(int? TransId)
+        {
 
+            List<PayItem> PayItemMaster = _IPay.PayItems.ToList();
+            List<SubFinalPayItemList> ItemsList = _IRec.SubFinalPayItemLists.Where(s => s.TransId == TransId).ToList();
+
+            return (from I in ItemsList
+                    join L in PayItemMaster on I.ItemCode.Trim() equals L.ItemCode.Trim()
+                    where I.UnitId == 9 && I.TransId == TransId
+                    select new SubPayRecoveryContrat { TransID = I.TransId, ItemCode = I.ItemCode, ItemName = L.ItemName, Amount = Convert.ToDecimal(I.Amount), Remarks = I.Remarks }).ToList();
+            //return new List<SubPayRecoveryContrat>();
+
+        }
 
         async Task<IEnumerable<SubPayRecoveryContrat>> IRecoveryServices.DeleteRecovery(int TransId, string ItemCode)
         {
@@ -94,6 +157,28 @@ namespace FinaPay.Services
                           new { ItemCode = L.ItemCode, UnitId = L.Unit }
                           where L.Unit == Convert.ToInt16(_ILog.getUnitID()) && I.TransId == TransId
                           select new SubPayRecoveryContrat { TransID = I.TransId, ItemCode = I.ItemCode, ItemName = L.ItemDescription, Amount = Convert.ToDecimal(I.Amount), Remarks = I.Remarks }).ToListAsync();
+
+        }
+
+
+        async Task<IEnumerable<SubPayRecoveryContrat>> IRecoveryServices.DeletePayRecovery(int TransId, string ItemCode)
+        {
+            SubFinalPayItemList ItemList = await _IRec.SubFinalPayItemLists.Where(s => s.TransId == TransId && s.ItemCode == ItemCode && s.UnitId == _ILog.getUnitID()).SingleOrDefaultAsync();
+            if (ItemList != null)
+            {
+                _IRec.SubFinalPayItemLists.Remove(ItemList);
+                _IRec.SaveChanges();
+            }
+
+            List<PayItem> PayItemMaster = _IPay.PayItems.ToList();
+            List<SubFinalPayItemList> ItemsList = _IRec.SubFinalPayItemLists.Where(s => s.TransId == TransId).ToList();
+
+            return (from I in ItemsList
+                    join L in PayItemMaster on I.ItemCode.Trim() equals L.ItemCode.Trim()
+                    where I.UnitId == 9 && I.TransId == TransId
+                    select new SubPayRecoveryContrat { TransID = I.TransId, ItemCode = I.ItemCode, ItemName = L.ItemName, Amount = Convert.ToDecimal(I.Amount), Remarks = I.Remarks }).ToList();
+
+
 
         }
 
@@ -308,6 +393,57 @@ namespace FinaPay.Services
             IEnumerable<RecoveryCheckContract> list1 = result;
             return list1;
         }
+        public async Task<IEnumerable<SubFinalPayHeadDetail>> GetReceived327DDN(Boolean Action)
+        {
+
+            IEnumerable<SubFinalPayHeadDetail> AllTrans = await (from H in _IRec.SubFinalPayHeadDetails
+                                                                 join D in _IRec.SubFinalPayDetails on H.TransId equals D.TransId
+                                                                 join L in _IRec.SubFinalPay327Heads on H.TransId.ToString() equals L.TransId
+                                                                 join K in _IRec.SubFinalPayDischargeTypes on H.Type equals K.Type
+                                                                 where D.SubjectClerk == true && D.Secreatry == true && D.AuthorizedOfficer == true && D.Ulevel == 1 && D.UnitId == 4 && L.Ddnpay == Action
+                                                                 select new SubFinalPayHeadDetail
+                                                                 {
+                                                                     TransId = H.TransId,
+                                                                     SysCode = H.SysCode,
+                                                                     CatCode = H.CatCode,
+                                                                     OfficialNo = H.OfficialNo,
+                                                                     Type = K.Des,
+                                                                     NgReference = H.NgReference,
+                                                                     DischargeDt = H.DischargeDt,
+                                                                     PForm = H.PForm,
+                                                                     PFormPath = H.PFormPath,
+                                                                     BankCode = H.BankCode,
+                                                                     BranchCode = H.BranchCode,
+                                                                     AccountNo = H.AccountNo,
+                                                                     VoucherNo = H.VoucherNo,
+                                                                     VoucherDes = H.VoucherDes,
+                                                                     ChequeNo = H.ChequeNo,
+                                                                     ChequeDt = H.ChequeDt,
+                                                                     PaymentDt = H.PaymentDt,
+                                                                     ActionComplete = H.ActionComplete,
+                                                                     Remarks = H.Remarks,
+                                                                     Ddnpay = H.Ddnpay,
+                                                                     PaySubClerk = H.PaySubClerk,
+                                                                     PaySsailor = H.PaySsailor,
+                                                                     AuditSubClerk = H.AuditSubClerk,
+                                                                     AuditSsailor = H.AuditSsailor,
+                                                                     AuditOfficer = H.AuditOfficer,
+                                                                     Ssopay = H.Ssopay,
+                                                                     PenSailor = H.PenSailor,
+                                                                     PenSsailor = H.PenSsailor,
+                                                                     Reject = H.Reject,
+                                                                     RejectedReason = H.RejectedReason,
+                                                                     RejectedBy = H.RejectedBy,
+                                                                     RejectedOn = H.RejectedOn
+                                                                 }).ToListAsync();
+
+            return AllTrans;
+
+
+
+
+
+        }
 
 
         public async Task<IEnumerable<RecoveryCheckContract>> GetForwardedRecDDN(int UnitId, string RollId, int uLevel)
@@ -316,11 +452,11 @@ namespace FinaPay.Services
             var PendingList = new List<Test1>();
             decimal total = 0;
             var tg = from H in _IRec.SubFinalPayHeadDetails
-                   
-                     where  H.Ddnpay == true
+
+                     where H.Ddnpay == true
 
                      orderby H.TransId
-                     select new { H.TransId, Subject= "" };
+                     select new { H.TransId, Subject = "" };
 
 
 
@@ -340,9 +476,9 @@ namespace FinaPay.Services
 
 
 
-            var result = await (from H in _IRec.SubFinalPayHeadDetails                              
+            var result = await (from H in _IRec.SubFinalPayHeadDetails
                                 join K in _IRec.SubFinalPayDischargeTypes on Convert.ToString(H.Type) equals K.Type
-                                where  H.Ddnpay == true
+                                where H.Ddnpay == true
 
                                 select new RecoveryCheckContract
                                 {
@@ -451,7 +587,7 @@ namespace FinaPay.Services
             return list1;
         }
 
-    
+
         public async Task<IEnumerable<RecoveryCheckContract>> GetReceivedActionPending(int UnitId, string RollId)
         {
             var list = new List<int>() { 3, 4, 5, 6, 7 };
@@ -664,25 +800,25 @@ namespace FinaPay.Services
         }
         public async Task<IEnumerable<RecoveryCheckContract>> GetReceivedRec(int UnitId, string RollId)
         {
-            var list = new List<int>() { 3, 4, 5, 6, 7 };
+            var list = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 18, 19, 20, 21, 22 };
 
             var PendingList = new List<Test1>();
             decimal total = 0;
 
-            var tg = from H in _IRec.SubFinalPayHeadDetails
-                     join D in _IRec.SubFinalPayDetails on H.TransId equals D.TransId
-                     join g in _IRec.SubAllowancesSubjects on D.UnitId equals g.SubId
-                     where D.AuthorizedOfficer == false && D.Ulevel == 1
-                     && !list.Contains(D.UnitId)
-                     orderby H.TransId
-                     select new { H.TransId, g.Subject };
+            var tg = (from H in _IRec.SubFinalPayHeadDetails
+                      join D in _IRec.SubFinalPayDetails on H.TransId equals D.TransId
+                      join g in _IRec.SubAllowancesSubjects on D.UnitId equals g.SubId
+                      where D.AuthorizedOfficer == false && D.Ulevel == 1
+                      && !list.Contains(D.UnitId)
+                      orderby H.TransId
+                      select new { H.TransId, Subject = "Recovery Pending" }).Distinct();
 
             int transid;
             int transid2 = 0;
             string details = string.Empty;
 
             int count = tg.Count();
-            int temp=0;
+            int temp = 0;
 
             foreach (var item in tg)
             {
@@ -697,13 +833,10 @@ namespace FinaPay.Services
                 {
                     if (details.Length > 0)
                     {
-
                         details = details + "," + item.Subject.Trim();
                     }
                     else
                     {
-
-
                         details = item.Subject.Trim();
                     }
                     if (count == temp)
@@ -715,7 +848,7 @@ namespace FinaPay.Services
 
                     }
                 }
-                
+
                 else
                 {
                     total = Convert.ToDecimal((from h in _IRec.SubFinalPayItemLists where h.TransId == transid2 select h.Amount).Sum());
@@ -810,13 +943,52 @@ namespace FinaPay.Services
 
         public async Task<string> GetUnitName(int UnitId)
         {
-            string UnitName =(await _IRec.SubAllowancesSubjects.Where(s=>s.SubId==UnitId).Select(s=>s.Subject).FirstAsync()).ToString();
+            string UnitName = (await _IRec.SubAllowancesSubjects.Where(s => s.SubId == UnitId).Select(s => s.Subject).FirstAsync()).ToString();
             return UnitName;
         }
-        public async Task UpdateRejectTrans(int TransId,int UnitId,string Reason)
+        public async Task UpdateRejectTrans(int TransId, int UnitId, string Reason)
         {
             _IRec.SubFinalPayDetails.Where(s => s.TransId == TransId && s.UnitId == UnitId && s.Ulevel == 1).ToList().ForEach(a => { a.AuthorizedOfficer = false; a.RejectReason = Reason; });
             await _IRec.SaveChangesAsync();
+        }
+
+        public async Task<string> DeleteProfile(int TransId)
+        {
+            List<SubFinalPayItemList> ItemList = await _IRec.SubFinalPayItemLists.Where(s => s.TransId == TransId).ToListAsync();
+            foreach (SubFinalPayItemList item in ItemList)
+            {
+                _IRec.SubFinalPayItemLists.Remove(item);
+                await _IRec.SaveChangesAsync();
+            }
+
+            List<SubFinalPayDetail> Details = await _IRec.SubFinalPayDetails.Where(s => s.TransId == TransId).ToListAsync();
+            foreach (SubFinalPayDetail subFinalPayDetail in Details)
+            {
+
+                _IRec.SubFinalPayDetails.Remove(subFinalPayDetail);
+                await _IRec.SaveChangesAsync();
+            }
+            SubFinalPayHeadDetail headDetails = await _IRec.SubFinalPayHeadDetails.Where(s => s.TransId == TransId).SingleOrDefaultAsync();
+            if (headDetails != null)
+            {
+
+                _IRec.SubFinalPayHeadDetails.Remove(headDetails);
+                await _IRec.SaveChangesAsync();
+            }
+            SubFinalPay327Head headDetails327 = await _IRec.SubFinalPay327Heads.Where(s => s.TransId == TransId.ToString()).SingleOrDefaultAsync();
+            if (headDetails327 != null)
+            {
+                _IRec.SubFinalPay327Heads.Remove(headDetails327);
+                await _IRec.SaveChangesAsync();
+            }
+            List<SubFinalPay327List> headDetails327List = await _IRec.SubFinalPay327Lists.Where(s => s.TransId == TransId.ToString()).ToListAsync();
+            foreach (SubFinalPay327List Pay327List in headDetails327List)
+            {
+
+                _IRec.SubFinalPay327Lists.Remove(Pay327List);
+                await _IRec.SaveChangesAsync();
+            }
+            return "Profile deleted";
         }
     }
     class Test1

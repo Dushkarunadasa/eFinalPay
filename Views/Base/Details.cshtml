@@ -1,0 +1,153 @@
+﻿@model IEnumerable<FinaPay.Models.SubFinalPay327List>
+
+@{
+    ViewData["Title"] = "327AllowancesList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-4">327 Allowances  Pending List</h1>
+<br />
+
+<div class="card mb-4">
+    <div class="card-body">
+
+        නාවික පුද්ගලයාට අදාලව ඔබ ආයතනයේ ඉදිරිපත් කිරීමට ඇති 327 දීමනා <span class="text-bg-info">Add New</span> ලිංකුව තුලින් ඇතුලත් කල හැකි අතර,එලෙස ඇතුලත් කල 327 දීමනා පහත වගුවෙන් පෙන්නුම් කරයි.එම දීමනාවන්හී විෂමතා ඇත්නම් වගුවේ <span class="text-bg-info">Delete</span>  ලිංකුව මගින් ඉවත් කිරීමට පහසුකම සලසා ඇත.
+        327 දීමනා නිවරදිනම්  <span class="text-bg-info">Forward</span> ලිංකුව මගින් ඉදිරි ක්‍රියාමාරග සදහා ඉදිරිපත් කල යුතුවේ.අදාළ නාවික පුද්ගලයාට කිසිදු 327 දීමනාවක් හිමි නොවේ නම් එයද 0 අගයන් එකතු කර ඉදිරිපත් කල යුතුය.
+       
+
+    </div>
+</div>
+
+
+
+
+<div class="row pt-4">
+
+
+    <div class="col-2">
+        <h3>  <span class="label label-default border "> TransId :@ViewBag.Message</span></h3>
+
+
+    </div>
+    
+</div>
+
+<div class="row">
+    <p class="text-danger"> @ViewBag.Error </p>
+
+</div>
+
+
+<table id="datatablesSimple" class=" table table-striped">
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PayMonth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._605606)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._605a606a)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._610611)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._612613)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._615614)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._690)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._686687)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._688689)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._598)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._596)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._600)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._630)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._619)
+            </th>
+         
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-dark">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PayMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._605606)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._605a606a)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._610611)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._612613)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._615614)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._690)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._686687)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._688689)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._598)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._596)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._600)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._630)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._619)
+                </td>
+
+             
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<FinaPay.Models.SubFinalPayHeadDetail>
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row pt-4">
+    <div class="col-6">
+        <h4>  <span class="label label-default">Add Pay Recoveries to Retired/Discharge/Resicom/Death Naval Person</span></h4>
+    </div>
+  
+</div>
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading "></div>
+    <div class="panel-body">
+        <p>
+            <span class="text-danger">අවසන් වැටුප් සකස් කිරීමට නියමිත නාවික පුද්ගලයින්ගේ විස්තර ඇතුලත් කිරීම  </span> <span class="text-bg-info">Add New Record</span><span class="text-danger">
+                ලිංකුව තුලින් පිවිස සිදුකල යුතුය.ඔබ විසින් ඇතුලත් කරන ලද නාවික පුද්ගලයින් අයකර ගැනීම් ඉදිරිපත්
+                කිරීම සදහා අනෙකුත් ආයතන වලට දිස්වීම සිදුවේ.එම නිසා අවසන් වැටුප් සකස් කිරීමට නියමිත නාවිකයින්ගේ විස්තර නොපමාව ඇතුලත් කල යුතුය.
+            </span>
+        </p>
+
+    </div>
+</div>
+<table class=" table table-hover" id="datatablesSimple">
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SysCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficialNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NgReference)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeDt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BaseCode)
+            </th>
+
+
+
+            <th>Select</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-dark">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SysCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CatCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficialNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NgReference)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DischargeDt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BaseCode)
+                </td>
+                <td>
+                    @Html.ActionLink("Select","RecList","PayOffice",new{ id= @item.TransId})
+                </td>
+             
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+

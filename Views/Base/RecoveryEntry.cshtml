@@ -1,0 +1,216 @@
+﻿@model FinaPay.Models.SubFinalPay327List
+
+@{
+    ViewData["Title"] = "327 Allowance Entry";
+}
+
+<h1 class="mt-4">327 Allowances ...</h1>
+<br />
+
+<form method="post" asp-Controller="Recovery">
+    <p class="text-danger"> @ViewBag.Message </p>
+
+    <div class="container alert alert-secondary" lock>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="TransId" class="col-form-label">Trasnaction ID </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="TransId" class="text-danger"></span>
+                <input asp-for="TransId" class="form-control" placeholder="TransId" />
+
+            </div>
+        </div>
+        <div class="row p-md-2 ">
+            <div class="col-3">
+                <label for="ItemCode" class="col-form-label">Order Id </label>
+            </div>
+            <div class="col-2">
+                <span asp-validation-for="OrderId" class="text-danger"></span>
+                <input asp-for="OrderId" class="form-control" />
+
+                @* <span asp-validation-for="ItemCode" class="text-danger"></span>
+                <select class="form-control" asp-items="Model.PayMonth" asp-for="PayMonth">
+                </select>*@
+
+            </div>
+        </div>
+        <div class="row p-md-2 ">
+            <div class="col-3">
+                <label for="ItemCode" class="col-form-label">PayMonth(YYYYMM) </label>
+            </div>
+            <div class="col-4">
+                <span asp-validation-for="PayMonth" class="text-danger"></span>
+                <input asp-for="PayMonth" class="form-control" placeholder="YYYYMM" />
+
+                @* <span asp-validation-for="ItemCode" class="text-danger"></span>
+                <select class="form-control" asp-items="Model.PayMonth" asp-for="PayMonth">
+                </select>*@
+
+            </div>
+        </div>
+
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">605/606 </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_605606" class="text-danger"></span>
+                <input asp-for="_605606" class="form-control" placeholder="605/606" />
+
+            </div>
+        </div>
+
+
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">605A/606A </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_605a606a" class="text-danger"></span>
+                <input asp-for="_605a606a" class="form-control" placeholder="605A/606A" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">610/611 </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_610611" class="text-danger"></span>
+                <input asp-for="_610611" class="form-control" placeholder="610/611" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">612/613 </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_612613" class="text-danger"></span>
+                <input asp-for="_612613" class="form-control" placeholder="612/613" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">615/614 </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_615614" class="text-danger"></span>
+                <input asp-for="_615614" class="form-control" placeholder="615/614" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">690</label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_690" class="text-danger"></span>
+                <input asp-for="_690" class="form-control" placeholder="690" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">686/687 </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_686687" class="text-danger"></span>
+                <input asp-for="_686687" class="form-control" placeholder="686/687" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">688/689</label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_688689" class="text-danger"></span>
+                <input asp-for="_688689" class="form-control" placeholder="688/689" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">598 </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_598" class="text-danger"></span>
+                <input asp-for="_598" class="form-control" placeholder="598" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">596 </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_596" class="text-danger"></span>
+                <input asp-for="_596" class="form-control" placeholder="596" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">600 </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_600" class="text-danger"></span>
+                <input asp-for="_600" class="form-control" placeholder="600" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">630 </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_630" class="text-danger"></span>
+                <input asp-for="_630" class="form-control" placeholder="630" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">619 </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="_619" class="text-danger"></span>
+                <input asp-for="_619" class="form-control" placeholder="619" />
+
+            </div>
+        </div>
+
+
+
+        <div class="row p-md-2">
+            <div class="col-6 offset-3">
+                <a asp-controller="Base" asp-action="RecoveryPendingList" asp-route-id="@Model.TransId" class="btn btn-warning" style="width:150px">Back to List</a>
+                <button asp-controller="Base" asp-action="RecoveryInsert" class="btn btn-primary">Create</button>
+            </div>
+
+        </div>
+    </div>
+
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>

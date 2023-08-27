@@ -22,6 +22,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.Extensions.Caching.Memory;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 
 namespace FinaPay.Controllers
 {
@@ -48,14 +49,14 @@ namespace FinaPay.Controllers
             return View();
         }
 
-        
+
 
 
         [HttpGet]
         public async Task<IActionResult> Login()
         {
-          
-       
+
+
             //this.ViewBag.ArtistId = new SelectList(this.db.Artists, "ArtistId", "Name", album.ArtistId);
 
 
@@ -99,12 +100,12 @@ namespace FinaPay.Controllers
 
             if (obj.UnitId > 0 && obj.RollId > 0)
             {
-                 SysCode = String.Empty;
-                 CatCode = String.Empty;
-                 officialNo = String.Empty;
-                 result = "0";
-                 email = obj.UserName.ToString();
-                 password = obj.Password.ToString();
+                SysCode = String.Empty;
+                CatCode = String.Empty;
+                officialNo = String.Empty;
+                result = "0";
+                email = obj.UserName.ToString();
+                password = obj.Password.ToString();
                 DataTable dt = new DataTable();
                 using (var Client = new HttpClient())
                 {
@@ -130,12 +131,30 @@ namespace FinaPay.Controllers
                     }
                     else
                     {
-                        string baseCode=string.Empty;
-                        var baseCode1 =await _Iss.getRights(SysCode, CatCode, officialNo, obj.UnitId, obj.RollId);
+                        string baseCode = string.Empty;
+                        var baseCode1 = await _Iss.getRights(SysCode, CatCode, officialNo, obj.UnitId, obj.RollId);
                         if (baseCode1 != "")
                         {
-                            _ILog.UpdateUserDetail(SysCode, CatCode, officialNo, email, baseCode1, obj.UnitId, obj.RollId.ToString());
-                            int unitss=_ILog.getUnitID();
+                            _ILog.UpdateUserDetail(SysCode, CatCode, officialNo, email, baseCode1.ToString().Trim(), obj.UnitId, obj.RollId.ToString());
+
+
+
+
+
+                            CookieOptions options = new CookieOptions();
+                            options.Expires = DateTime.Now.AddDays(1);
+
+                            _accessor.HttpContext.Response.Cookies.Append("SysCode", SysCode, options);
+                            _accessor.HttpContext.Response.Cookies.Append("CatCode", CatCode, options);
+                            _accessor.HttpContext.Response.Cookies.Append("officialNo", officialNo, options);
+                            _accessor.HttpContext.Response.Cookies.Append("UserName", email, options);
+                            _accessor.HttpContext.Response.Cookies.Append("baseCode", baseCode1, options);
+                            _accessor.HttpContext.Response.Cookies.Append("UnitID", obj.UnitId.ToString(), options);
+                            _accessor.HttpContext.Response.Cookies.Append("UserRoll", obj.RollId.ToString(), options);
+
+
+                            string s = _accessor.HttpContext.Request.Cookies["SysCode"];
+                            int unitss = obj.UnitId;
                             pagevalidity = true;
                         }
                         else
@@ -157,10 +176,10 @@ namespace FinaPay.Controllers
             if (pagevalidity == true)
             {
                 string IP = GetIPAddress();
-               
-                 await _Iss.updateLog(new SubAllowancesLog { Ipaddress = IP, Ldescription = obj.UnitId.ToString() + "- Unit  " + obj.RollId.ToString() + " - Roll Login", LogOn = DateTime.Now, LuserId = email });
 
-            
+                await _Iss.updateLog(new SubAllowancesLog { Ipaddress = IP, Ldescription = obj.UnitId.ToString() + "- Unit  " + obj.RollId.ToString() + " - Roll Login", LogOn = DateTime.Now, LuserId = email });
+
+
 
                 return RedirectToAction("Index", "Home");
 
@@ -183,7 +202,7 @@ namespace FinaPay.Controllers
             {
                 obj.Units.Add(new SelectListItem { Text = unit.Subject, Value = unit.SubId.ToString() });
             }
-           
+
             @ViewBag.Message = "Invalid user Name or Password";
             return View(obj);
 
@@ -197,7 +216,7 @@ namespace FinaPay.Controllers
             return Json(userTypes);
         }
 
-   
+
         public async Task<IActionResult> Logout()
         {
             if (HttpContext.Request.Cookies["FinalPay.Cookie"] != null)

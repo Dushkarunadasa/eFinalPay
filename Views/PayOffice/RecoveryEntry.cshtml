@@ -1,0 +1,137 @@
+﻿@model FinaPay.Contract.SubPayReEntryContract
+
+@{
+    ViewData["Title"] = "Pay Recovery Entry";
+}
+
+<h1 class="mt-4">Pay Recovery & Allowances  Entry Form</h1>
+<br />
+
+<div class="card mb-4">
+    <div class="card-body">
+
+       නාවික පුද්ගලයාට අදාලව ඔබ ආයතනයේ ඉදිරිපත් කල හැකි අයකර ගැනීම් තෝරා ගැනීමට පහසුකම් සපයා ඇති අතර, කිසිදු අයකර ගැනීමක් නොමැතිනම් අනිවාර්යයෙන්ම  <span class="text-bg-info">Nill Report</span>
+            තෝරා අදාල දත්ත පුරවා ඉදිරිපත් කිරීමට කටයුතු තල යුතුය.ඉදිරිපත් කරන
+       සමග වෙනත් අයකර ගැනීම් නොඑවීමට වගබලා ගත යුතුය.
+
+    </div>
+</div>
+
+
+
+<form method="post" asp-Controller="Recovery">
+    <p class="text-danger"> @ViewBag.Message </p>
+
+    <div class="container alert alert-secondary" lock>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="TransId" class="col-form-label">Trasnaction ID </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="TransId" class="text-danger"></span>
+                <input asp-for="TransId"  class="form-control" placeholder="TransId"  />
+
+            </div>
+        </div>
+        <div class="row p-md-2 ">
+            <div class="col-3">
+                <label for="ItemCode" class="col-form-label">Item Code </label>
+            </div>
+            <div class="col-6">
+
+                <span asp-validation-for="ItemCode" class="text-danger"></span>
+                <select class="form-control" asp-items="Model.ItemCode" asp-for="ItemName">
+                </select>
+
+            </div>
+        </div>
+        <div class=" row p-md-2 ">
+
+            <div class="col-6">
+
+                <span asp-validation-for="ItemName" class="text-danger"></span>
+                <input asp-for="ItemName" class="form-control" placeholder="ItemName" type="hidden" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="Amount" class="col-form-label">Amount </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="Amount" class="text-danger"></span>
+                <input asp-for="Amount" class="form-control" placeholder="Amount" />
+
+            </div>
+        </div>
+        <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="NofDays" class="col-form-label">NofDays </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="NofDays" class="text-danger"></span>
+                <input asp-for="NofDays" class="form-control" placeholder="NofDays" />
+
+            </div>
+            <div class="col-2">
+
+                <button id="CalAmount" onclick="AmountCal()" class="form-control" type="button">Calculate</button>
+                
+
+            </div>
+
+
+        </div>
+
+         <div class="form-group row p-md-2 ">
+            <div class="col-3">
+                <label for="IAmount" class="col-form-label">Calculated Amount </label>
+            </div>
+            <div class="col-2">
+
+                <span asp-validation-for="IAmount" class="text-danger"></span>
+                <input asp-for="IAmount" class="form-control" placeholder="Calculated Amount" />
+
+            </div>
+        </div>
+      
+
+        <div class="row p-md-2">
+            <div class="col-6 offset-3">
+
+                       
+                <a asp-controller="PayOffice" asp-action="RecList" asp-route-id=@Model.TransId class="btn btn-warning" style="width:150px">Back to List</a>
+                <button asp-controller="PayOffice" asp-action="PayRecoveryInsert" class="btn btn-primary">Create</button>
+
+            </div>
+
+        </div>
+    </div>
+
+</form>
+
+<script  type="text/javascript">
+    function AmountCal()
+    {
+        var Amount,NOFDays,sum;
+        alert= parseInt(document.getElementById("Amount").value);
+        Amount = parseInt(document.getElementById("Amount").value);
+        NOFDays = parseInt(document.getElementById("NofDays").value)
+        sum=((Amount/30)*NOFDays).toFixed(2);
+        document.getElementById("IAmount").value =sum;
+     
+        
+    }
+
+</script>
+    
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    }
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>

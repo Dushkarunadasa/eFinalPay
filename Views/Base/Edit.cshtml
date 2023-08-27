@@ -1,0 +1,105 @@
+﻿@model IEnumerable<FinaPay.Models.SubFinalPayHeadDetail>
+
+@{
+    ViewData["Title"] = "327PendingList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="mt-4">327 Allowances -Base/Ship</h1>
+<br />
+<div class="card mb-4">
+    <div class="card-body">
+        <p> පහත වගුවේ ලැයිස්තු ගතවන නාවික පුද්ගලයන් හට අදාල 327 දීමනා ඇතුලත් කිරීමට සහ එම දීමනාවන් ඉදිරිපත් කිරීමට ඇති අතර එම එක් එක් නාවික පුද්ගලයාට අදාළ 327 දීමනා විස්තර සදහා <span class="text-bg-info">Details</span>  ලිංකුව තුලින් පිවිසිය යුතුය.</p>
+
+    </div>
+</div>
+
+<table id="datatablesSimple" class=" table table-striped">
+    <thead>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SysCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficialNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeDt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr class="table-secondary">
+            <th>
+                @Html.DisplayNameFor(model => model.TransId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SysCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CatCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OfficialNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DischargeDt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Remarks)
+            </th>
+            <th></th>
+        </tr>
+    </tfoot>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-dark">
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SysCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CatCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfficialNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DischargeDt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Remarks)
+                </td>
+                <td>
+
+                    <a asp-controller="Base" asp-action="RecoveryPendingList" asp-route-id="@item.TransId" type="button" class="btn btn-outline-primary">
+                        <i class="glyphicon glyphicon-plus-sign"></i> Details
+                    </a>
+                   
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
